@@ -164,8 +164,8 @@ pub fn regroupementcentraliteaction (centra: &Vec<f32>,plan: &Vec<Op>, ground: &
 
 pub fn affichagehmapop<T,I : Display>(val:HashMap<Op,Vec<f32>>,ground: &GroundProblem,symbol: &World<T,I> ){
     for (i,v) in val.iter(){
-        print!("L'opérateur {} numéroté ",symbol.table.format(&ground.operators.name(*i)));
-        println!("{:?} de centralité : ",*i);
+        print!("The operator {} numbered ",symbol.table.format(&ground.operators.name(*i)));
+        println!("{:?} with centrality : ",*i);
         
         for n in v{
             print!("{}, ", *n);
@@ -178,7 +178,7 @@ pub fn affichagehmapaction<T,I : Display>(val:HashMap<SymId,Vec<f32>>,symbol: &W
     for (i,v) in val.iter(){
         let vecinter = vec![*i];
         let slice = &vecinter[..];
-        println!("L'action {} de centralité :",symbol.table.format(slice));        
+        println!("The action {} with centrality : :",symbol.table.format(slice));        
         for n in v{
             print!("{}, ", *n);
         }
@@ -187,121 +187,20 @@ pub fn affichagehmapaction<T,I : Display>(val:HashMap<SymId,Vec<f32>>,symbol: &W
 }
 
 pub fn affichageregroucentra<T,I : Display>(val:HashMap<(usize,usize),Vec<Resume>>,ground: &GroundProblem,symbol: &World<T,I> ){
-    println!("======= SUUUUU {}",val.len());
+    //println!("======= SUUUUU {}",val.len());
     for i in val.keys(){
-        println!("======= centralite {:?}",i);
+        //println!("======= centralite {:?}",i);
         for d in val.get(&i){
             for r in d{
-                print!("L'opérateur {:?} de l'étape {} alias ",r.op(),r.numero());
-                println!("L'opérateur {} de l'étape {}",symbol.table.format(&ground.operators.name(r.op().unwrap())),r.numero());
+                //print!("The operator {:?} from step {} alias ",r.op(),r.numero());
+                println!("{}:{}",r.numero(),symbol.table.format(&ground.operators.name(r.op().unwrap())));
             }
             
         }
     }
 }
 
-/*
-//algo naif adapté à notre situation
-pub fn centraliteintermediarite(support : &DMatrix<i32>){
-    let taille = support.len();
-    //visite de tous les noeuds pour avoir leur centralité d'intermédiarité
-    for i in 0..taille {
-        //visite des noeuds précédents
-        for prec in 0..i{
-            //visites des noeuds suivants
-            for suiv in i..taille{
-                intermediarite(i,prec,suiv,support);
-            }
-        }
-    }
-}
 
-//bfs
-pub fn intermediarite (etape: usize,precedent:usize,suivant: usize,support : &DMatrix<i32>)->Option<Vec<usize>>{
-    let taille= support.len();
-    let mut out = None;
-    let mut queue = Vec::new();
-    let mut discovered = Vec::new();
-    let mut listechemin=Vec::new();//transfo en Hashmap? usize vec<vec<
-    queue.push(precedent);
-    if precedent>etape || suivant<etape{
-        out
-    }
-    else{
-        let step = queue.remove(0);
-        discovered.push(step);
-        for i in step..taille-1{
-            if suivant<step{
-                //out
-            }
-            else if support[(step,i)]==1{
-                queue.push(i);
-                discovered[i]=discovered[step]+1;
-            }
-
-        }
-        if {
-
-        }else if
-
-
-        out
-    }
-}
-/*
-pub fn allpath(paths: &Vec<Vec<usize>>,chemin: &Vec<usize>,parent:Vec<usize>,a: usize,b:usize){
-    if u ==1{
-        paths.push(chemin);
-    }else{
-        //tous les parents de u
-        for par in parent{
-            if parent
-        }
-    }
-}*/
-
-pub fn bfs(start : usize,stop : usize,support : &DMatrix<i32>){
-    let mut queue= Vec::new();
-    let taille = support.len();
-    let mut visited= Vec::with_capacity(taille-1);
-    let mut parents=Vec::with_capacity(taille-2);
-    while !queue.is_empty(){
-        let node = queue.remove(0);
-        if node == end{
-            //stop
-
-        }
-        for i in 0..taille{
-            if support[(node,i)]==1{
-                if visited[i]==0{
-                    visited[i]=visited[node]+1
-                    queue.push(i);
-                    parent[i].push(node);
-                }
-                else if visited[node]=visited[i]-1{
-                    parent[i].push(node);
-                }
-            }
-        }
-
-    }
-    //retour...
-}
-*/
-
-
-/*
-//algo brandes
-pub fn brandes(support : &DMatrix<i32>){
-    let taille = support.len();
-    let mut centrainter=Vec::with_capacity(taille-1);
-    //visite de tous les noeuds
-    for i in 0..taille-1{
-        let mut pile =Vec::new();
-        let P
-    }
-
-}*/
 
 //betweeness centrality 
 
