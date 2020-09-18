@@ -1,14 +1,14 @@
 use anyhow::*;
 use aries_planning::classical::search::{plan_search, Cfg};
-use aries_planning::classical::state::Op;
+
 use aries_planning::classical::{from_chronicles, grounded_problem};
 use aries_planning::parsing::pddl_to_chronicles;
 use explain::explain::cause::*;
-use explain::explain::centralite::*;
+
 use explain::explain::explain::*;
 use explain::explain::question::*;
 
-use std::fmt::Formatter;
+
 use std::fs::File;
 use std::io; /*::{Write, BufReader, BufRead, Error,stdin};*/
 use std::io::Write;
@@ -56,9 +56,9 @@ struct Opt {
 
 fn main() -> Result<()> {
     let opt: Opt = Opt::from_args();
-    let start_time = std::time::Instant::now();
+    let _start_time = std::time::Instant::now();
 
-    let mut config = Cfg::default();
+    let config = Cfg::default();
     // config.h_weight = opt.h_weight;
     //config.use_lookahead = !opt.no_lookahead;
 
@@ -123,7 +123,7 @@ fn main() -> Result<()> {
     println!("parse the plan");
     //parse fichier plan
     let mut plan = Vec::new();
-    let mut lines = plan_string.lines();
+    let lines = plan_string.lines();
 
     for c in lines.clone() {
         for op in grounded.operators.iter() {
@@ -202,7 +202,7 @@ fn main() -> Result<()> {
                 decompo.push(index);
             }
 
-            let mut cmd = decompo[0];
+            let cmd = decompo[0];
 
             match cmd {
                 "s" | "support" => {
@@ -236,7 +236,7 @@ fn main() -> Result<()> {
                         &grounded.goals,
                         &config,
                     );
-                    let result = match search_result {
+                    let _result = match search_result {
                         Some(plan2) => {
                             println!("Got plan: {} actions", plan2.len());
                             println!("=============");

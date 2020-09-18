@@ -8,7 +8,7 @@ use std::fmt::Display;
 
 //ajout pour gerer fichier
 use std::fs::File;
-use std::io::{BufRead, BufReader, Error, Write};
+use std::io::{Write};
 
 //matrice facilite Dijktstra
 use nalgebra::base::*;
@@ -103,7 +103,7 @@ pub fn causalite(etape: i32, plan: Vec<Op>, initial_state: &State, ops: &Operato
     let op = op.unwrap();
     let mut etat = initial_state.clone();
     let mut histo = Vec::new();
-    for var in initial_state.literals() {
+    for _var in initial_state.literals() {
         let res = defaultresume();
         histo.push(res);
     }
@@ -156,7 +156,7 @@ pub fn causalitegoals(
     //initialisation
     let mut etat = initial_state.clone();
     let mut histo = Vec::new();
-    for var in initial_state.literals() {
+    for _var in initial_state.literals() {
         let res = defaultresume();
         histo.push(res);
     }
@@ -171,7 +171,7 @@ pub fn causalitegoals(
     let plan2 = plan.clone();
 
     //etape construction histogramme lié
-    for etape in plan2 {
+    for _etape in plan2 {
         let bob = count as usize;
         let opt = plan.get(bob);
         let opt = opt.unwrap();
@@ -217,7 +217,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
 
     //boucle faire lien causaux de chaque opé plan
     let mut count = 0; //pour suivre etape
-    for etape in plan {
+    for _etape in plan {
         let plan2 = plan3.clone();
         //faire cause
         let cause = causalite(count, plan2, &ground.initial_state, &ground.operators);
@@ -230,7 +230,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
         for res in cause {
             match res.op() {
                 None => strcause = " i ".to_string(),
-                Some(Resume) => {
+                Some(_Resume) => {
                     strcause = format!(
                         "{} etape {}",
                         symbol
@@ -261,7 +261,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
     for res in fin {
         match res.op() {
             None => strcause = " i ".to_string(),
-            Some(Resume) => {
+            Some(_Resume) => {
                 strcause = format!(
                     "{} etape {}",
                     symbol
@@ -282,7 +282,7 @@ pub fn uniquement(plan: Vec<Op>) -> Vec<Unique> {
     let mut un: Vec<Unique> = Vec::new();
     for i in plan {
         let mut count = 0;
-        for mut g in &mut un {
+        for g in &mut un {
             if g.operateur() == i {
                 g.duplicite();
                 count = count + 1;
@@ -492,7 +492,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
 
     //boucle faire lien causaux de chaque opé plan
     let mut count = 0; //pour suivre etape
-    for etape in plan {
+    for _etape in plan {
         let plan2 = plan3.clone();
         //faire cause
         let cause = causalite(count, plan2, &ground.initial_state, &ground.operators);
@@ -502,7 +502,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
         for res in cause {
             match res.op() {
                 None => strcause = " i ".to_string(),
-                Some(Resume) => {
+                Some(_Resume) => {
                     strcause = format!(
                         "{} etape {}",
                         symbol
@@ -534,7 +534,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
     for res in fin {
         match res.op() {
             None => strcause = " i ".to_string(),
-            Some(Resume) => {
+            Some(_Resume) => {
                 strcause = format!(
                     "{} etape {}",
                     symbol
@@ -579,7 +579,7 @@ pub fn menace(plan: Vec<Op>, ground: &GroundProblem) -> Vec<Obligationtemp> {
     let mut cause: Vec<Vec<Resume>> = Vec::new();
     let mut out = Vec::new();
     let mut step = 0 as i32;
-    for i in plan1 {
+    for _i in plan1 {
         let plan4 = plan.clone();
         let e = causalite(step, plan4, &ground.initial_state, ops);
         cause.push(e);
@@ -634,7 +634,7 @@ pub fn menace2(plan: Vec<Op>, ground: &GroundProblem) -> Vec<Obligationtemp> {
     let mut cause: Vec<Vec<Resume>> = Vec::new();
     let mut out = Vec::new();
     let mut step = 0 as i32;
-    for i in plan1 {
+    for _i in plan1 {
         let plan4 = plan.clone();
         let e = causalite(step, plan4, &ground.initial_state, ops);
         cause.push(e);
@@ -788,7 +788,7 @@ pub fn dijkstra(plan: Vec<Op>, ground: &GroundProblem) -> Vec<Necessaire> {
     }
 
     let mut count = 0;
-    for i in plan2 {
+    for _i in plan2 {
         let plan3 = plan.clone();
         cause = causalite(count, plan3, init, ops);
         //mise à jour matrice lien causaux
@@ -912,7 +912,7 @@ pub fn dijkstra2(support: &DMatrix<i32>, plan: Vec<Op>, ground: &GroundProblem) 
     let plan3 = plan.clone();
     let mut cause = causalitegoals(plan3, init, ops, goals);
     let plan3 = plan.clone();
-    let mut matrice = support.clone();
+    let matrice = support.clone();
     let mut atraite = Vec::new();
     let mut traite = Vec::new();
 
@@ -1033,7 +1033,7 @@ pub fn xdijkstra(plan: Vec<Op>, ground: &GroundProblem) -> Vec<Necessaire> {
     }
 
     let mut count = 0;
-    for i in plan2 {
+    for _i in plan2 {
         let plan3 = plan.clone();
         cause = causalite(count, plan3, init, ops);
         //mise à jour matrice lien causaux
@@ -1163,7 +1163,7 @@ pub fn xmenace2(plan: Vec<Op>, ground: &GroundProblem) -> Vec<Obligationtemp> {
     let mut cause: Vec<Vec<Resume>> = Vec::new();
     let mut out = Vec::new();
     let mut step = 0 as i32;
-    for i in plan1 {
+    for _i in plan1 {
         let plan4 = plan.clone();
         let e = causalite(step, plan4, &ground.initial_state, ops);
         cause.push(e);
@@ -1252,7 +1252,7 @@ pub fn matricesupport(plan: &Vec<Op>, ground: &GroundProblem) -> DMatrix<i32> {
     }
 
     let mut count = 0;
-    for i in plan {
+    for _i in plan {
         let plan3 = plan.clone();
         cause = causalite(count, plan3, init, ops);
         //mise à jour matrice lien causaux
@@ -1285,7 +1285,7 @@ pub fn matricemenace(plan: &Vec<Op>, ground: &GroundProblem) -> DMatrix<i32> {
     //matrice arc lien causaux goal
     let mut cause: Vec<Vec<Resume>> = Vec::new();
     let mut step = 0 as i32;
-    for i in plan1 {
+    for _i in plan1 {
         let plan2 = plan.clone();
         let e = causalite(step, plan2, &ground.initial_state, ops);
         cause.push(e);
@@ -1507,7 +1507,7 @@ pub fn explicationsupport(
         }
     }
     let s2 = step2 as usize;
-    let mut step;
+    let step;
     if !(plan.get(s2).is_none()) {
         step = newresume(*plan.get(s2).unwrap(), step2);
     } else {
@@ -1578,13 +1578,13 @@ pub fn explicationmenace(
 pub fn explicationmenacequestion(
     plan: &Vec<Op>,
     menace: &DMatrix<i32>,
-    support: &DMatrix<i32>,
+    _support: &DMatrix<i32>,
     step1: i32,
     step2: i32,
 ) -> bool {
     //dijkstra( plan, ground);
     let length = plan.len();
-    let l2 = length as u32;
+    let _l2 = length as u32;
     let s1 = step1 as usize;
     let s2 = step2 as usize;
     let m = menace.get((s1, s2));
@@ -1750,7 +1750,7 @@ Besoin de world pour extraire id de move puis utiliser cette id dans ops
 
 pub fn choixpredaction3(
     action: String,
-    plan: &Vec<Op>,
+    _plan: &Vec<Op>,
     ground: &GroundProblem,
     wo: &SymbolTable<String, String>,
 ) -> Vec<SVId>
@@ -2096,7 +2096,7 @@ pub fn supportindirectavantagepoid(
     infini: i32,
 ) -> Necessaire {
     //dijkstra( plan, ground);
-    let init = &ground.initial_state;
+    let _init = &ground.initial_state;
     let ops = &ground.operators;
     let length = plan.len();
     let mut atraite = Vec::new();
@@ -2208,7 +2208,7 @@ pub fn supportindirectavantagepoid(
         }
     }
     let s2 = step2 as usize;
-    let mut step;
+    let step;
     if !(plan.get(s2).is_none()) {
         step = newresume(*plan.get(s2).unwrap(), step2);
     } else {
@@ -2233,7 +2233,7 @@ pub fn supportindirectpoid(
     infini: i32,
 ) -> Necessaire {
     //dijkstra( plan, ground);
-    let init = &ground.initial_state;
+    let _init = &ground.initial_state;
     let ops = &ground.operators;
     let length = plan.len();
     let mut atraite = Vec::new();
@@ -2345,7 +2345,7 @@ pub fn supportindirectpoid(
         }
     }
     let s2 = step2 as usize;
-    let mut step;
+    let step;
     if !(plan.get(s2).is_none()) {
         step = newresume(*plan.get(s2).unwrap(), step2);
     } else {
@@ -2366,7 +2366,7 @@ pub fn supportindirectpoid(
 pub fn abstractionop(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
-    ground: &GroundProblem,
+    _ground: &GroundProblem,
 ) -> Vec<Vec<Op>> {
     let row = support.nrows();
     let col = support.ncols();
@@ -2438,7 +2438,7 @@ pub fn abstractionaction(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &SymbolTable<String, String>,
+    _symbol: &SymbolTable<String, String>,
 ) -> Vec<Vec<SymId>> {
     /*let var = symbol.id(&action);
     if var.is_none() {
@@ -2534,7 +2534,7 @@ pub fn coordination(
             println!("erreur entrée paramètre");
         } else {
             if h.get_mut(&id.unwrap()).is_none() {
-                let mut v = Vec::new();
+                let v = Vec::new();
                 h.insert(id.unwrap(), v);
             }
         }
@@ -2616,14 +2616,14 @@ pub fn poidsparametredesavantage(
     support: &DMatrix<i32>,
     h: &HashMap<SymId, Vec<Op>>,
     plan: &Vec<Op>,
-    ground: &GroundProblem,
+    _ground: &GroundProblem,
 ) -> DMatrix<i32> {
     let mut count = 0;
     let mut supportpoids = support.clone();
     let t = plan.len();
     for i in plan {
         let mut paramutile = false;
-        for (key, vec) in h.iter() {
+        for (_key, vec) in h.iter() {
             for op in vec {
                 if *op == *i {
                     paramutile = true;
@@ -2647,14 +2647,14 @@ pub fn poidsparametreavantage(
     support: &DMatrix<i32>,
     h: &HashMap<SymId, Vec<Op>>,
     plan: &Vec<Op>,
-    ground: &GroundProblem,
+    _ground: &GroundProblem,
 ) -> DMatrix<i32> {
     let mut count = 0;
     let mut supportpoids = support.clone();
     let t = plan.len();
     for i in plan {
         let mut paramutile = false;
-        for (key, vec) in h.iter() {
+        for (_key, vec) in h.iter() {
             for op in vec {
                 if *op == *i {
                     paramutile = true;

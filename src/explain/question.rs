@@ -5,7 +5,7 @@ use aries_planning::classical::state::*;
 use aries_planning::classical::GroundProblem;
 use aries_planning::symbols::SymbolTable;
 use nalgebra::base::*;
-use std::fmt::{Display, Error, Formatter};
+
 
 //Quelles sont les supports de l’étape a?
 pub fn supportedby(num: usize, support: &DMatrix<i32>, plan: &Vec<Op>) -> Vec<Resume> {
@@ -372,7 +372,7 @@ pub fn parallelisablebool(
         Parallelisabledetail::Menace_Avant {
             origine,
             vers,
-            supportconcern,
+            supportconcern: _,
         } => return Parallelisable::Non_menace { origine, vers },
         Parallelisabledetail::Menace_Apres { origine, vers } => {
             return Parallelisable::Non_menace { origine, vers }
@@ -383,7 +383,7 @@ pub fn parallelisablebool(
         Parallelisabledetail::Support_Indirect {
             origine,
             vers,
-            chemin,
+            chemin: _,
         } => return Parallelisable::Non_support { origine, vers },
         Parallelisabledetail::Oui => return Parallelisable::Oui,
     }
@@ -395,7 +395,7 @@ pub fn parallelisable(
     support: &DMatrix<i32>,
     menace: &DMatrix<i32>,
     plan: &Vec<Op>,
-    ground: &GroundProblem,
+    _ground: &GroundProblem,
 ) -> Parallelisabledetail {
     let mut p = Parallelisabledetail::Oui;
     let ai = a as i32;
@@ -474,10 +474,10 @@ pub fn parallelisable(
 pub fn affichageq6(p: Parallelisable) {
     match p {
         Parallelisable::Oui => println!("are parallelizable "),
-        Parallelisable::Non_menace { origine, vers } => {
+        Parallelisable::Non_menace { origine: _, vers: _ } => {
             println!(" aren't parallelizable because of the existence of a threat ")
         }
-        Parallelisable::Non_support { origine, vers } => {
+        Parallelisable::Non_support { origine: _, vers: _ } => {
             println!("aren't parallelizable because of a support relation ")
         }
     }
@@ -486,19 +486,19 @@ pub fn affichageq6(p: Parallelisable) {
 pub fn affichageqd6(p: Parallelisabledetail) {
     match p {
         Parallelisabledetail::Oui => println!("are parallelizable"),
-        Parallelisabledetail::Support_Direct { origine, vers } => {
+        Parallelisabledetail::Support_Direct { origine: _, vers: _ } => {
             println!("aren't parallelizable because of a direct support relation")
         }
         Parallelisabledetail::Support_Indirect {
-            origine,
-            vers,
-            chemin,
+            origine: _,
+            vers: _,
+            chemin: _,
         } => println!("aren't parallelizable because of an indirect support relation "),
-        Parallelisabledetail::Menace_Apres { origine, vers } => println!("aren't parallelizable  "),
+        Parallelisabledetail::Menace_Apres { origine: _, vers: _ } => println!("aren't parallelizable  "),
         Parallelisabledetail::Menace_Avant {
-            origine,
-            vers,
-            supportconcern,
+            origine: _,
+            vers: _,
+            supportconcern: _,
         } => {
             println!("aren't parallelizable because the older step threaten the most recent step ")
         }

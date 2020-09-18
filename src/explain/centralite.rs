@@ -1,5 +1,5 @@
 //use crate::classical::heuristics::*;
-use crate::explain::explain::*;
+
 use crate::explain::state2::*;
 use aries_planning::classical::state::*;
 use aries_planning::classical::GroundProblem;
@@ -115,7 +115,7 @@ pub fn regroupementcentraliteaction(
     centra: &Vec<f32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &SymbolTable<String, String>,
+    _symbol: &SymbolTable<String, String>,
 ) -> HashMap<SymId, Vec<f32>> {
     let taille = centra.len();
     let mut regroupe = HashMap::new();
@@ -127,7 +127,7 @@ pub fn regroupementcentraliteaction(
         if v.is_empty() {
             let action = ground.operators.name(*i)[0];
             v.push(action);
-            let mut vec = Vec::new();
+            let vec = Vec::new();
             regroupe.insert(action, vec);
             nbop = nbop + 1;
         } else {
@@ -141,7 +141,7 @@ pub fn regroupementcentraliteaction(
             if notin {
                 let action = ground.operators.name(*i)[0];
                 v.push(action);
-                let mut vec = Vec::new();
+                let vec = Vec::new();
                 regroupe.insert(action, vec);
                 nbop = nbop + 1;
             }
@@ -292,7 +292,7 @@ pub fn floydwarshall(support: &DMatrix<i32>) -> DMatrix<i32> {
     let taille = support.nrows();
     let t = taille as i32;
     let taille1 = taille - 1;
-    let t1 = t - 1;
+    let _t1 = t - 1;
     let mut dist = DMatrix::from_diagonal_element(taille1, taille1, 0);
     let td = dist.nrows();
     for l in 0..td {
@@ -321,7 +321,7 @@ pub fn floydwarshallpath(support: &DMatrix<i32>) -> (DMatrix<i32>, DMatrix<i32>)
     let taille = support.nrows();
     let t = taille as i32;
     let taille1 = taille - 1;
-    let t1 = t - 1;
+    let _t1 = t - 1;
     let mut dist = DMatrix::from_diagonal_element(taille1, taille1, 0);
     let mut next = DMatrix::from_diagonal_element(taille1, taille1, 0);
     let td = dist.nrows();

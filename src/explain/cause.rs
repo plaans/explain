@@ -7,7 +7,7 @@ use std::fmt::Display;
 
 //ajout pour gerer fichier
 use std::fs::File;
-use std::io::{BufRead, BufReader, Error, Write};
+use std::io::{Write};
 
 //matrice facilite Dijktstra
 use nalgebra::base::*;
@@ -23,7 +23,7 @@ pub fn causalite2(
     let num = etape as usize;
     let opt = plan.get(num);
     let op = opt.unwrap();
-    let res = newresume(*op, etape);
+    let _res = newresume(*op, etape);
     let etat = initial_state.clone();
     //liste des variables utilisé dans la précond de op
     let mut vecvar = Vec::new();
@@ -52,9 +52,9 @@ pub fn causalite2(
 }
 
 pub fn causalitegoals2(
-    plan: &Vec<Op>,
+    _plan: &Vec<Op>,
     initial_state: &State,
-    ops: &Operators,
+    _ops: &Operators,
     histo: &Vec<Resume>,
     goals: &Vec<Lit>,
 ) -> Vec<Resume> {
@@ -109,12 +109,12 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
     let mut count = 0; //pour suivre etape
     let mut e = ground.initial_state.clone();
     let mut h: Vec<Resume> = Vec::new(); //faire init h
-    for var in ground.initial_state.literals() {
+    for _var in ground.initial_state.literals() {
         let res = defaultresume();
         h.push(res);
     }
     //let mut cause : Vec<Resume>=Vec::new();
-    for etape in plan {
+    for _etape in plan {
         //let plan2 =plan3.clone();
         //faire cause
         let (e1, h2, cause) = causalite2(count, plan, &e, &ground.operators, &h);
@@ -129,7 +129,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
         for res in cause {
             match res.op() {
                 None => strcause = " i ".to_string(),
-                Some(Resume) => {
+                Some(_Resume) => {
                     strcause = format!(
                         "{}:{}",
                         res.numero(),
@@ -160,7 +160,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
     for res in fin {
         match res.op() {
             None => strcause = " i ".to_string(),
-            Some(Resume) => {
+            Some(_Resume) => {
                 strcause = format!(
                     "{}:{}",
                     res.numero(),
@@ -207,9 +207,9 @@ pub fn fichierdotmat<T, I: Display>(
                 if r == t {
                     strcause = " Goal ".to_string();
                     if c == t {
-                        let stri = format!("\"{}\" -> \" Goal \";\n", strcause);
+                        let _stri = format!("\"{}\" -> \" Goal \";\n", strcause);
                     } else if c == t + 1 {
-                        let stri = format!("\"{}\" -> \" i \"\n", strcause);
+                        let _stri = format!("\"{}\" -> \" i \"\n", strcause);
                     } else {
                         let stri = format!(
                             "\"{}\" -> \"{}:{}\";\n",
@@ -273,23 +273,23 @@ pub fn fichierdotmat<T, I: Display>(
 }
 
 pub fn matricesupport2(plan: &Vec<Op>, ground: &GroundProblem) -> DMatrix<i32> {
-    let init = &ground.initial_state;
-    let ops = &ground.operators;
-    let goals = &ground.goals;
+    let _init = &ground.initial_state;
+    let _ops = &ground.operators;
+    let _goals = &ground.goals;
     let length = plan.len();
-    let l2 = length as u32;
+    let _l2 = length as u32;
 
     let mut matrice = DMatrix::from_diagonal_element(length + 2, length + 2, 0);
 
     let mut count = 0;
     let mut e = ground.initial_state.clone();
     let mut h: Vec<Resume> = Vec::new();
-    for var in ground.initial_state.literals() {
+    for _var in ground.initial_state.literals() {
         let res = defaultresume();
         h.push(res);
     }
     //let mut cause : Vec<Resume>=Vec::new();
-    for i in plan {
+    for _i in plan {
         let (e1, h2, cause) =
             causalite2(count, /*&*/ plan /*2*/, &e, &ground.operators, &h);
         //println!("c {}, {},",cause.is_empty(),cause.len());
@@ -341,13 +341,13 @@ pub fn matricemenace2(plan: &Vec<Op>, ground: &GroundProblem) -> DMatrix<i32> {
     //matrice arc lien causaux goal
     let mut e = ground.initial_state.clone();
     let mut h: Vec<Resume> = Vec::new();
-    for var in ground.initial_state.literals() {
+    for _var in ground.initial_state.literals() {
         let res = defaultresume();
         h.push(res);
     }
     let mut cause: Vec<Vec<Resume>> = Vec::new();
     let mut step = 0 as i32;
-    for i in plan1 {
+    for _i in plan1 {
         //let plan2=plan.clone();
         //let e = causalite(step,plan2,&ground.initial_state,ops);
         let (e1, h2, c) = causalite2(step, plan, &e, &ground.operators, &h);
@@ -458,9 +458,9 @@ pub fn fichierdottempmat<T, I: Display>(
                 if r == t {
                     strcause = " Goal ".to_string();
                     if c == t {
-                        let stri = format!("\"{}\" -> \" Goal \";\n", strcause);
+                        let _stri = format!("\"{}\" -> \" Goal \";\n", strcause);
                     } else if c == t + 1 {
-                        let stri = format!("\"{}\" -> \" i \"\n", strcause);
+                        let _stri = format!("\"{}\" -> \" i \"\n", strcause);
                     } else {
                         let stri = format!(
                             "\"{}\" -> \"{}:{}\";\n",
@@ -659,9 +659,9 @@ pub fn fichierdottempmat2<T, I: Display>(
                 if r == t {
                     strcause = " Goal ".to_string();
                     if c == t {
-                        let stri = format!("\"{}\" -> \" Goal \";\n", strcause);
+                        let _stri = format!("\"{}\" -> \" Goal \";\n", strcause);
                     } else if c == t + 1 {
-                        let stri = format!("\"{}\" -> \" i \"\n", strcause);
+                        let _stri = format!("\"{}\" -> \" i \"\n", strcause);
                     } else {
                         let stri = format!(
                             "\"{}\" -> \"{}:{}\";\n",

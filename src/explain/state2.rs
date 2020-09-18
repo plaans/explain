@@ -194,8 +194,8 @@ pub enum Parallelisable {
 
 pub fn originenonp(p: Parallelisable) -> usize {
     match p {
-        Parallelisable::Non_menace { origine, vers } => origine,
-        Parallelisable::Non_support { origine, vers } => origine,
+        Parallelisable::Non_menace { origine, vers: _ } => origine,
+        Parallelisable::Non_support { origine, vers: _ } => origine,
         _ => {
             println!("Les 2 étapes sont parallelisable");
             0
@@ -205,8 +205,8 @@ pub fn originenonp(p: Parallelisable) -> usize {
 
 pub fn ciblenonp(p: Parallelisable) -> usize {
     match p {
-        Parallelisable::Non_menace { origine, vers } => vers,
-        Parallelisable::Non_support { origine, vers } => vers,
+        Parallelisable::Non_menace { origine: _, vers } => vers,
+        Parallelisable::Non_support { origine: _, vers } => vers,
         _ => {
             println!("Les 2 étapes sont parallelisable");
             0
@@ -239,17 +239,17 @@ pub enum Parallelisabledetail {
 
 pub fn originenonpad(p: Parallelisabledetail) -> usize {
     match p {
-        Parallelisabledetail::Menace_Apres { origine, vers } => origine,
+        Parallelisabledetail::Menace_Apres { origine, vers: _ } => origine,
         Parallelisabledetail::Menace_Avant {
             origine,
-            vers,
-            supportconcern,
+            vers: _,
+            supportconcern: _,
         } => origine,
-        Parallelisabledetail::Support_Direct { origine, vers } => origine,
+        Parallelisabledetail::Support_Direct { origine, vers: _ } => origine,
         Parallelisabledetail::Support_Indirect {
             origine,
-            vers,
-            chemin,
+            vers: _,
+            chemin: _,
         } => origine,
         _ => {
             println!("Les 2 étapes sont parallelisable");
@@ -260,17 +260,17 @@ pub fn originenonpad(p: Parallelisabledetail) -> usize {
 
 pub fn ciblenonpad(p: Parallelisabledetail) -> usize {
     match p {
-        Parallelisabledetail::Menace_Apres { origine, vers } => vers,
+        Parallelisabledetail::Menace_Apres { origine: _, vers } => vers,
         Parallelisabledetail::Menace_Avant {
-            origine,
+            origine: _,
             vers,
-            supportconcern,
+            supportconcern: _,
         } => vers,
-        Parallelisabledetail::Support_Direct { origine, vers } => vers,
+        Parallelisabledetail::Support_Direct { origine: _, vers } => vers,
         Parallelisabledetail::Support_Indirect {
-            origine,
+            origine: _,
             vers,
-            chemin,
+            chemin: _,
         } => vers,
         _ => {
             println!("Les 2 étapes sont parallelisable");
@@ -282,8 +282,8 @@ pub fn ciblenonpad(p: Parallelisabledetail) -> usize {
 pub fn pad_detail(p: Parallelisabledetail) -> Vec<Option<usize>> {
     match p {
         Parallelisabledetail::Menace_Avant {
-            origine,
-            vers,
+            origine: _,
+            vers: _,
             supportconcern,
         } => {
             let mut n = Vec::new();
@@ -291,8 +291,8 @@ pub fn pad_detail(p: Parallelisabledetail) -> Vec<Option<usize>> {
             n
         }
         Parallelisabledetail::Support_Indirect {
-            origine,
-            vers,
+            origine: _,
+            vers: _,
             chemin,
         } => {
             let mut v = Vec::new();
