@@ -81,5 +81,7 @@ Example of question : "support 4"
 if you want to use your dot file to make a graph, use graphviz with:
 
 dot -Tpng graphique.dot -o graph.png
+
 Or
+
 xdot
