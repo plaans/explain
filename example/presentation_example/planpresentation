@@ -1,0 +1,7 @@
+(pick ballebleu rooma left)
+(move rooma roomb)
+(drop ballebleu roomb left)
+(move roomb rooma)
+(pick ballerouge rooma left)
+(move rooma roomb)
+(drop ballerouge roomb left)
