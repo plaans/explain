@@ -40,6 +40,7 @@ Options available for explainable
 -m                  # To create dot file for threat
 -t                  # To create dot file for temporal representation
 -q question         # Ask question
+-i                  # interactive mode
 ```
 
 Form of the question "question parameters"
@@ -68,6 +69,7 @@ Questions available:
 Example of question : "support 4"
 
 -i                  # interactive mode
+
     s   Generate dot support and display matrix support
     m   Generate dot threat and display matrix threat
     q   Question same format as option without "" 
@@ -77,6 +79,7 @@ Example of question : "support 4"
     e   exit
 
 if you want to use your dot file to make a graph, use graphviz with:
+
 dot -Tpng graphique.dot -o graph.png
 Or
 xdot
