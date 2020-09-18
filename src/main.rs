@@ -240,7 +240,7 @@ fn main() -> Result<()> {
                             println!("Got plan: {} actions", plan2.len());
                             println!("=============");
 
-                            let path = "../plan";
+                            let path = "./plan";
                             let mut output =
                                 File::create(path).expect("Something went wrong reading the file");
 
