@@ -1,0 +1,19 @@
+digraph D { 
+"0:(pick ballebleu rooma left)" -> "2:(drop ballebleu roomb left)";
+"1:(move rooma roomb)" -> "2:(drop ballebleu roomb left)";
+"1:(move rooma roomb)" -> "3:(move roomb rooma)";
+"2:(drop ballebleu roomb left)" -> "4:(pick ballerouge rooma left)";
+"2:(drop ballebleu roomb left)" -> " Goal ";
+"3:(move roomb rooma)" -> "4:(pick ballerouge rooma left)";
+"3:(move roomb rooma)" -> "5:(move rooma roomb)";
+"4:(pick ballerouge rooma left)" -> "6:(drop ballerouge roomb left)";
+"5:(move rooma roomb)" -> "6:(drop ballerouge roomb left)";
+"6:(drop ballerouge roomb left)" -> " Goal ";
+" i " -> "0:(pick ballebleu rooma left)";
+" i " -> "1:(move rooma roomb)";
+" i " -> "2:(drop ballebleu roomb left)";
+" i " -> "3:(move roomb rooma)";
+" i " -> "4:(pick ballerouge rooma left)";
+" i " -> "5:(move rooma roomb)";
+" i " -> "6:(drop ballerouge roomb left)";
+} 

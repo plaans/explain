@@ -70,8 +70,8 @@ Example of question : "support 4"
 
 -i                  # interactive mode
 
-    s   Generate dot support and display matrix support
-    m   Generate dot threat and display matrix threat
+    support-graph   Generate dot support and display matrix support
+    threat-graph   Generate dot threat and display matrix threat
     q   Question same format as option without "" 
     gg  Make plan with aries planificator if you have suspicion about your plan
     p   Display plan

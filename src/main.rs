@@ -4,10 +4,9 @@ use aries_planning::classical::search::{plan_search, Cfg};
 use aries_planning::classical::{from_chronicles, grounded_problem};
 use aries_planning::parsing::pddl_to_chronicles;
 use explain::explain::cause::*;
-
+use explain::explain::state2::*;
 use explain::explain::explain::*;
 use explain::explain::question::*;
-
 
 use std::fs::File;
 use std::io; /*::{Write, BufReader, BufRead, Error,stdin};*/
@@ -205,12 +204,12 @@ fn main() -> Result<()> {
             let cmd = decompo[0];
 
             match cmd {
-                "s" | "support" => {
+                "s" | "support-graph" => {
                     fichierdotmat(&mat, &plan, &grounded, &lifted.world);
                     println!("File graphique.dot rewrited for support relations  ");
                     affichagematrice(&mat);
                 }
-                "m" | "threat" => {
+                "m" | "threat-graph" => {
                     fichierdotmenacemat(&matm, &plan, &grounded, &lifted.world);
                     println!("file graphiquemenace2.dot rewrited for threat relations");
                     affichagematrice(&matm);
@@ -271,8 +270,8 @@ fn main() -> Result<()> {
                 }
                 "h" | "help" => {
                     println!("
-                    s   Generate dot support and display matrixsupport
-                    m   Generate dot threat and display matrix menace
+                    s or support-graph   Generate dot support and display matrixsupport
+                    m or threat-graph   Generate dot threat and display matrix menace
                     q   Question 
                     gg  Make plan with aries planificator if you have suspicion about your plan
                     p   Display plan
@@ -291,7 +290,23 @@ fn main() -> Result<()> {
                     -parallelizable <step> <step>               #Display a boolean to know if the two steps are parallelizable, parallelizable-d to have more detail");
                 }
                 "e" | "exit" => bool = false,
-                _ => println!("Not an available entry {}", cmd),
+                _ =>{
+                    let sq=selectionquestion(cmd);
+                    if sq == Question::Qundefined{
+                        println!("Not an available entry {}", cmd)
+                    }
+                    else{
+                        choixquestionsmultiple(
+                        &decompo,
+                        &mat,
+                        &matm,
+                        &plan,
+                        &grounded,
+                        &lifted.world,
+                        &symbols,
+                        );
+                    }  
+                },
             }
             println!("\n=====End of the interaction=======");
         }
