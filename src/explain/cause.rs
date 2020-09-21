@@ -1,5 +1,3 @@
-#[allow(dead_code)]
-#[allow(unused)]
 //use crate::classical::heuristics::*;
 use crate::explain::explain::*;
 use crate::explain::state2::*;

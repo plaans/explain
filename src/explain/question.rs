@@ -947,84 +947,139 @@ pub fn choixquestionsmultiple(
     match sq {
         Question::NoQuestion => println!(""),
         Question::SupportBy => {
-            let mystring = decompoquestion[1].to_string();
-            let num = mystring.parse::<usize>().unwrap();
-            let v = supportedby(num, support, plan);
-            affichageq1(num, plan, v, ground, lifted);
+            if decompoquestion.len()<=1{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring = decompoquestion[1].to_string();
+                let num = mystring.parse::<usize>().unwrap();
+                let v = supportedby(num, support, plan);
+                affichageq1(num, plan, v, ground, lifted);
+            }     
         }
         Question::SupportOf => {
-            let mystring = decompoquestion[1].to_string();
-            let num = mystring.parse::<usize>().unwrap();
-            let v = supportof(num, support, plan);
-            affichageq2(num, plan, v, ground, lifted);
+            if decompoquestion.len()<=1{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring = decompoquestion[1].to_string();
+                let num = mystring.parse::<usize>().unwrap();
+                let v = supportof(num, support, plan);
+                affichageq2(num, plan, v, ground, lifted);
+            }
         }
         Question::Menace => {
-            let mystring1 = decompoquestion[1].to_string();
-            let num1 = mystring1.parse::<usize>().unwrap();
-            let mystring2 = decompoquestion[2].to_string();
-            let num2 = mystring2.parse::<usize>().unwrap();
-            let v = menacefromto(num1, num2, menace);
-            affichageq3(num1, num2, v, plan, ground, lifted);
+            if decompoquestion.len()<=2{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring1 = decompoquestion[1].to_string();
+                let num1 = mystring1.parse::<usize>().unwrap();
+                let mystring2 = decompoquestion[2].to_string();
+                let num2 = mystring2.parse::<usize>().unwrap();
+                let v = menacefromto(num1, num2, menace);
+                affichageq3(num1, num2, v, plan, ground, lifted);
+            }
         }
         Question::Necessarybool => {
-            let mystring = decompoquestion[1].to_string();
-            let num = mystring.parse::<usize>().unwrap();
-            let v = isnecessary(num, support, plan, ground);
-            affichageq4(num, v, plan, ground, lifted);
+            if decompoquestion.len()<=1{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring = decompoquestion[1].to_string();
+                let num = mystring.parse::<usize>().unwrap();
+                let v = isnecessary(num, support, plan, ground);
+                affichageq4(num, v, plan, ground, lifted);
+            }
         }
         Question::Necessary => {
-            let mystring = decompoquestion[1].to_string();
-            let num = mystring.parse::<usize>().unwrap();
-            let v = isnecessarydetail(num, support, plan, ground);
-            affichageqd4(num, v, plan, ground, lifted);
+            if decompoquestion.len()<=1{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring = decompoquestion[1].to_string();
+                let num = mystring.parse::<usize>().unwrap();
+                let v = isnecessarydetail(num, support, plan, ground);
+                affichageqd4(num, v, plan, ground, lifted);
+            }
         }
         Question::Waybetweenbool => {
-            let mystring1 = decompoquestion[1].to_string();
-            let num1 = mystring1.parse::<usize>().unwrap();
-            let mystring2 = decompoquestion[2].to_string();
-            let num2 = mystring2.parse::<usize>().unwrap();
-            let v = waybetweenbool(num1, num2, support, plan);
-            affichageq5(num1, num2, v, plan, ground, lifted);
+            if decompoquestion.len()<=2{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring1 = decompoquestion[1].to_string();
+                let num1 = mystring1.parse::<usize>().unwrap();
+                let mystring2 = decompoquestion[2].to_string();
+                let num2 = mystring2.parse::<usize>().unwrap();
+                let v = waybetweenbool(num1, num2, support, plan);
+                affichageq5(num1, num2, v, plan, ground, lifted);
+            }
         }
         Question::Waybetween => {
-            let mystring1 = decompoquestion[1].to_string();
-            let num1 = mystring1.parse::<usize>().unwrap();
-            let mystring2 = decompoquestion[2].to_string();
-            let num2 = mystring2.parse::<usize>().unwrap();
-            let v = waybetween(num1, num2, support, plan);
-            affichageqd5(&v, ground, lifted);
+            if decompoquestion.len()<=2{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring1 = decompoquestion[1].to_string();
+                let num1 = mystring1.parse::<usize>().unwrap();
+                let mystring2 = decompoquestion[2].to_string();
+                let num2 = mystring2.parse::<usize>().unwrap();
+                let v = waybetween(num1, num2, support, plan);
+                affichageqd5(&v, ground, lifted);
+            }
         }
         Question::Parallelisablebool => {
-            let mystring1 = decompoquestion[1].to_string();
-            let num1 = mystring1.parse::<usize>().unwrap();
-            let mystring2 = decompoquestion[2].to_string();
-            let num2 = mystring2.parse::<usize>().unwrap();
-            let v = parallelisablebool(num1, num2, support, menace, plan, ground);
-            affichageq6(v);
+            if decompoquestion.len()<=2{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring1 = decompoquestion[1].to_string();
+                let num1 = mystring1.parse::<usize>().unwrap();
+                let mystring2 = decompoquestion[2].to_string();
+                let num2 = mystring2.parse::<usize>().unwrap();
+                let v = parallelisablebool(num1, num2, support, menace, plan, ground);
+                affichageq6(v);
+            }
         }
         Question::Parallelisable => {
-            let mystring1 = decompoquestion[1].to_string();
-            let num1 = mystring1.parse::<usize>().unwrap();
-            let mystring2 = decompoquestion[2].to_string();
-            let num2 = mystring2.parse::<usize>().unwrap();
-            let v = parallelisable(num1, num2, support, menace, plan, ground);
-            affichageqd6(v);
+            if decompoquestion.len()<=2{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring1 = decompoquestion[1].to_string();
+                let num1 = mystring1.parse::<usize>().unwrap();
+                let mystring2 = decompoquestion[2].to_string();
+                let num2 = mystring2.parse::<usize>().unwrap();
+                let v = parallelisable(num1, num2, support, menace, plan, ground);
+                affichageqd6(v);
+            }
         }
         Question::AchieveGoal => unimplemented!(),
         Question::Synchronisation => {
-            let t = decompoquestion.len();
-            let mut listparam = Vec::new();
-            for i in 1..t {
-                listparam.push(decompoquestion[i].to_string());
+            if decompoquestion.len()<=1{
+                println!("Missing parameters, verify your question");
             }
-            let listesynchro = researchsynchro(&listparam, support, plan, ground, symbol);
-            affichageq8s(&listesynchro, ground, lifted);
+            else{
+                let t = decompoquestion.len();
+                let mut listparam = Vec::new();
+                for i in 1..t {
+                    listparam.push(decompoquestion[i].to_string());
+                }
+                let listesynchro = researchsynchro(&listparam, support, plan, ground, symbol);
+                affichageq8s(&listesynchro, ground, lifted);
+            }
         }
         Question::Betweeness => {
-            let mystring = decompoquestion[1].to_string();
-            let num = mystring.parse::<usize>().unwrap();
-            let v = nbetweeness(num, support, plan);
-            affichageq8b(v, ground, lifted);
+            if decompoquestion.len()<=1{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring = decompoquestion[1].to_string();
+                let num = mystring.parse::<usize>().unwrap();
+                let v = nbetweeness(num, support, plan);
+                affichageq8b(v, ground, lifted);
+            }
         }
         Question::Weigthway => unimplemented!(),
         Question::Qundefined => println!("Not a question available"),

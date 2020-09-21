@@ -1,5 +1,3 @@
-#[allow(dead_code)]
-#[allow(unused_assignments)]
 //use crate::classical::heuristics::*;
 use crate::explain::state2::*;
 use aries_planning::classical::state::*;
