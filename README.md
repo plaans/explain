@@ -28,12 +28,12 @@ This build compile artifacts and place them in the `target/debug` or `target/rel
 cargo install --bin explain --path . 
 ``` 
 
-To use explainable you can do 
+To use explain you can do 
 ```
 ./target/release/explain <way/to/problem.pddl> <way/to/plan> <Options>
 ```
 
-Options available for explainable
+Options available for explain
 ```
 -d domain           # To give manually the domain of the problem
 -s                  # To create dot file for support

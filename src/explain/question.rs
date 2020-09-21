@@ -343,48 +343,48 @@ pub fn parallelisablebool(
     let bi = b as i32;
     if a > b {
         let nec=explicationsupport(plan, support, ai, bi);
-        if nec.nec(){p= Parallelisable::Non_support{origine:a,vers:b};}
+        if nec.nec(){p= Parallelisable::NonSupport{origine:a,vers:b};}
     }else{
         let nec=explicationsupport(plan, support, bi, ai);
-        if nec.nec(){p= Parallelisable::Non_support{origine:b,vers:a};}
+        if nec.nec(){p= Parallelisable::NonSupport{origine:b,vers:a};}
     }
     if p == Parallelisable::Oui{
         let m =explicationmenacequestion(plan, menace, support, ai, bi);
         if m{
-          p=Parallelisable::Non_menace{origine:a,vers:b};
+          p=Parallelisable::NonMenace{origine:a,vers:b};
         }
         let m=explicationmenacequestion(plan, menace, support,  bi, ai);
         if m{
-            p=Parallelisable::Non_menace{origine:b,vers:a};
+            p=Parallelisable::NonMenace{origine:b,vers:a};
         }
     }
     p*/
     let qd = parallelisable(a, b, support, menace, plan, ground);
     /*if qd == Parallelisabledetail::Oui{ return Parallelisable::Oui}
-    else if qd == Parallelisabledetail::Support_Direct{origine : a,vers:b} || qd==Parallelisabledetail::Support_Indirect{origine:a,vers:b,chemin}{
-        return Parallelisable::Non_support{origine:a,vers:b}
+    else if qd == Parallelisabledetail::SupportDirect{origine : a,vers:b} || qd==Parallelisabledetail::SupportIndirect{origine:a,vers:b,chemin}{
+        return Parallelisable::NonSupport{origine:a,vers:b}
     }
-    else if qd == Parallelisabledetail::Support_Direct{origine : b,vers:a} || qd==Parallelisabledetail::Support_Indirect{origine:b,vers:a,chemin}{
-        return Parallelisable::Non_support{origine:b,vers:a}
+    else if qd == Parallelisabledetail::SupportDirect{origine : b,vers:a} || qd==Parallelisabledetail::SupportIndirect{origine:b,vers:a,chemin}{
+        return Parallelisable::NonSupport{origine:b,vers:a}
     }
-    else{return Parallelisable::Non_menace{origine:a,vers:b}}*/
+    else{return Parallelisable::NonMenace{origine:a,vers:b}}*/
     match qd {
-        Parallelisabledetail::Menace_Avant {
+        Parallelisabledetail::MenaceAvant {
             origine,
             vers,
             supportconcern: _,
-        } => return Parallelisable::Non_menace { origine, vers },
-        Parallelisabledetail::Menace_Apres { origine, vers } => {
-            return Parallelisable::Non_menace { origine, vers }
+        } => return Parallelisable::NonMenace { origine, vers },
+        Parallelisabledetail::MenaceApres { origine, vers } => {
+            return Parallelisable::NonMenace { origine, vers }
         }
-        Parallelisabledetail::Support_Direct { origine, vers } => {
-            return Parallelisable::Non_support { origine, vers }
+        Parallelisabledetail::SupportDirect { origine, vers } => {
+            return Parallelisable::NonSupport { origine, vers }
         }
-        Parallelisabledetail::Support_Indirect {
+        Parallelisabledetail::SupportIndirect {
             origine,
             vers,
             chemin: _,
-        } => return Parallelisable::Non_support { origine, vers },
+        } => return Parallelisable::NonSupport { origine, vers },
         Parallelisabledetail::Oui => return Parallelisable::Oui,
     }
 }
@@ -402,14 +402,14 @@ pub fn parallelisable(
     let bi = b as i32;
     if a > b {
         if support[(b, a)] == 1 {
-            p = Parallelisabledetail::Support_Direct {
+            p = Parallelisabledetail::SupportDirect {
                 origine: b,
                 vers: a,
             };
         } else {
             let nec = explicationsupport(plan, support, ai, bi);
             if nec.nec() {
-                p = Parallelisabledetail::Support_Indirect {
+                p = Parallelisabledetail::SupportIndirect {
                     origine: a,
                     vers: b,
                     chemin: nec.chemin(),
@@ -418,14 +418,14 @@ pub fn parallelisable(
         }
     } else {
         if support[(a, b)] == 1 {
-            p = Parallelisabledetail::Support_Direct {
+            p = Parallelisabledetail::SupportDirect {
                 origine: a,
                 vers: b,
             };
         } else {
             let nec = explicationsupport(plan, support, bi, ai);
             if nec.nec() {
-                p = Parallelisabledetail::Support_Indirect {
+                p = Parallelisabledetail::SupportIndirect {
                     origine: a,
                     vers: b,
                     chemin: nec.chemin(),
@@ -438,13 +438,13 @@ pub fn parallelisable(
         if opt.is_some() {
             let (s1, s2, i) = opt.unwrap();
             if i.is_some() {
-                p = Parallelisabledetail::Menace_Avant {
+                p = Parallelisabledetail::MenaceAvant {
                     origine: s1,
                     vers: s2,
                     supportconcern: i,
                 }
             } else {
-                p = Parallelisabledetail::Menace_Apres {
+                p = Parallelisabledetail::MenaceApres {
                     origine: s1,
                     vers: s2,
                 };
@@ -455,13 +455,13 @@ pub fn parallelisable(
         if opt.is_some() {
             let (s1, s2, i) = opt.unwrap();
             if i.is_some() {
-                p = Parallelisabledetail::Menace_Avant {
+                p = Parallelisabledetail::MenaceAvant {
                     origine: s1,
                     vers: s2,
                     supportconcern: i,
                 }
             } else {
-                p = Parallelisabledetail::Menace_Apres {
+                p = Parallelisabledetail::MenaceApres {
                     origine: s1,
                     vers: s2,
                 };
@@ -474,10 +474,10 @@ pub fn parallelisable(
 pub fn affichageq6(p: Parallelisable) {
     match p {
         Parallelisable::Oui => println!("are parallelizable "),
-        Parallelisable::Non_menace { origine: _, vers: _ } => {
+        Parallelisable::NonMenace { origine: _, vers: _ } => {
             println!(" aren't parallelizable because of the existence of a threat ")
         }
-        Parallelisable::Non_support { origine: _, vers: _ } => {
+        Parallelisable::NonSupport { origine: _, vers: _ } => {
             println!("aren't parallelizable because of a support relation ")
         }
     }
@@ -486,16 +486,16 @@ pub fn affichageq6(p: Parallelisable) {
 pub fn affichageqd6(p: Parallelisabledetail) {
     match p {
         Parallelisabledetail::Oui => println!("are parallelizable"),
-        Parallelisabledetail::Support_Direct { origine: _, vers: _ } => {
+        Parallelisabledetail::SupportDirect { origine: _, vers: _ } => {
             println!("aren't parallelizable because of a direct support relation")
         }
-        Parallelisabledetail::Support_Indirect {
+        Parallelisabledetail::SupportIndirect {
             origine: _,
             vers: _,
             chemin: _,
         } => println!("aren't parallelizable because of an indirect support relation "),
-        Parallelisabledetail::Menace_Apres { origine: _, vers: _ } => println!("aren't parallelizable  "),
-        Parallelisabledetail::Menace_Avant {
+        Parallelisabledetail::MenaceApres { origine: _, vers: _ } => println!("aren't parallelizable  "),
+        Parallelisabledetail::MenaceAvant {
             origine: _,
             vers: _,
             supportconcern: _,
@@ -1028,6 +1028,6 @@ pub fn choixquestionsmultiple(
         }
         Question::Weigthway => unimplemented!(),
         Question::Qundefined => println!("Not a question available"),
-        _ => println!("Reach Unreachable"),
+        //_ => println!("Reach Unreachable"),
     }
 }

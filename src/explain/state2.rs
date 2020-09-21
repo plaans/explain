@@ -188,14 +188,14 @@ pub fn newot(ope: Op, step: i32, oper: Op, next: i32) -> Obligationtemp {
 #[derive(PartialEq)]
 pub enum Parallelisable {
     Oui,
-    Non_menace { origine: usize, vers: usize },
-    Non_support { origine: usize, vers: usize },
+    NonMenace { origine: usize, vers: usize },
+    NonSupport { origine: usize, vers: usize },
 }
 
 pub fn originenonp(p: Parallelisable) -> usize {
     match p {
-        Parallelisable::Non_menace { origine, vers: _ } => origine,
-        Parallelisable::Non_support { origine, vers: _ } => origine,
+        Parallelisable::NonMenace { origine, vers: _ } => origine,
+        Parallelisable::NonSupport { origine, vers: _ } => origine,
         _ => {
             println!("Les 2 étapes sont parallelisable");
             0
@@ -205,8 +205,8 @@ pub fn originenonp(p: Parallelisable) -> usize {
 
 pub fn ciblenonp(p: Parallelisable) -> usize {
     match p {
-        Parallelisable::Non_menace { origine: _, vers } => vers,
-        Parallelisable::Non_support { origine: _, vers } => vers,
+        Parallelisable::NonMenace { origine: _, vers } => vers,
+        Parallelisable::NonSupport { origine: _, vers } => vers,
         _ => {
             println!("Les 2 étapes sont parallelisable");
             0
@@ -217,20 +217,20 @@ pub fn ciblenonp(p: Parallelisable) -> usize {
 #[derive(PartialEq)]
 pub enum Parallelisabledetail {
     Oui,
-    Menace_Apres {
+    MenaceApres {
         origine: usize,
         vers: usize,
     },
-    Menace_Avant {
+    MenaceAvant {
         origine: usize,
         vers: usize,
         supportconcern: Option<usize>,
     },
-    Support_Direct {
+    SupportDirect {
         origine: usize,
         vers: usize,
     },
-    Support_Indirect {
+    SupportIndirect {
         origine: usize,
         vers: usize,
         chemin: Option<Vec<Resume>>,
@@ -239,14 +239,14 @@ pub enum Parallelisabledetail {
 
 pub fn originenonpad(p: Parallelisabledetail) -> usize {
     match p {
-        Parallelisabledetail::Menace_Apres { origine, vers: _ } => origine,
-        Parallelisabledetail::Menace_Avant {
+        Parallelisabledetail::MenaceApres { origine, vers: _ } => origine,
+        Parallelisabledetail::MenaceAvant {
             origine,
             vers: _,
             supportconcern: _,
         } => origine,
-        Parallelisabledetail::Support_Direct { origine, vers: _ } => origine,
-        Parallelisabledetail::Support_Indirect {
+        Parallelisabledetail::SupportDirect { origine, vers: _ } => origine,
+        Parallelisabledetail::SupportIndirect {
             origine,
             vers: _,
             chemin: _,
@@ -260,14 +260,14 @@ pub fn originenonpad(p: Parallelisabledetail) -> usize {
 
 pub fn ciblenonpad(p: Parallelisabledetail) -> usize {
     match p {
-        Parallelisabledetail::Menace_Apres { origine: _, vers } => vers,
-        Parallelisabledetail::Menace_Avant {
+        Parallelisabledetail::MenaceApres { origine: _, vers } => vers,
+        Parallelisabledetail::MenaceAvant {
             origine: _,
             vers,
             supportconcern: _,
         } => vers,
-        Parallelisabledetail::Support_Direct { origine: _, vers } => vers,
-        Parallelisabledetail::Support_Indirect {
+        Parallelisabledetail::SupportDirect { origine: _, vers } => vers,
+        Parallelisabledetail::SupportIndirect {
             origine: _,
             vers,
             chemin: _,
@@ -281,7 +281,7 @@ pub fn ciblenonpad(p: Parallelisabledetail) -> usize {
 //match à refaire pour avoir sortie cohérente refaire menace avant en vec.
 pub fn pad_detail(p: Parallelisabledetail) -> Vec<Option<usize>> {
     match p {
-        Parallelisabledetail::Menace_Avant {
+        Parallelisabledetail::MenaceAvant {
             origine: _,
             vers: _,
             supportconcern,
@@ -290,7 +290,7 @@ pub fn pad_detail(p: Parallelisabledetail) -> Vec<Option<usize>> {
             n.push(supportconcern);
             n
         }
-        Parallelisabledetail::Support_Indirect {
+        Parallelisabledetail::SupportIndirect {
             origine: _,
             vers: _,
             chemin,
@@ -343,7 +343,7 @@ pub fn selectionquestion(s: &str) -> Question {
         "2" | "Support" | "support" | "supportde" | "Supportde" | "supportDe" | "SupportDe"
         | "Supportof" | "supportof" | "SupportOf" | "supportOf" => Question::SupportOf,
         "3" | "Menace" | "menace" | "menaceentre" | "Menaceentre" | "menaceEntre"
-        | "MenaceEntre" | "threat" | "threatbetween" | "threat" => Question::Menace,
+        | "MenaceEntre" | "threat" | "threatbetween" => Question::Menace,
         "4" | "nécessaire" | "Nécessaire" | "necessaire" | "Necessaire" | "necessary"
         | "Necessary" => Question::Necessarybool,
         "4d"

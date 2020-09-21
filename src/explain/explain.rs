@@ -1,3 +1,5 @@
+#[allow(dead_code)]
+#[allow(unused_assignments)]
 //use crate::classical::heuristics::*;
 use crate::explain::state2::*;
 use aries_planning::classical::state::*;
@@ -213,7 +215,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
     //initialisation
     //let plan2 =plan.clone();
     let plan3 = plan.clone();
-    let mut strcause = String::new();
+    let mut strcause ;//= String::new();
 
     //boucle faire lien causaux de chaque opé plan
     let mut count = 0; //pour suivre etape
@@ -230,7 +232,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
         for res in cause {
             match res.op() {
                 None => strcause = " i ".to_string(),
-                Some(_Resume) => {
+                Some(_resume) => {
                     strcause = format!(
                         "{} etape {}",
                         symbol
@@ -261,7 +263,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
     for res in fin {
         match res.op() {
             None => strcause = " i ".to_string(),
-            Some(_Resume) => {
+            Some(_resume) => {
                 strcause = format!(
                     "{} etape {}",
                     symbol
@@ -488,7 +490,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
 
     //initialisation
     let plan3 = plan.clone();
-    let mut strcause = String::new();
+    let mut strcause ;//= String::new();
 
     //boucle faire lien causaux de chaque opé plan
     let mut count = 0; //pour suivre etape
@@ -502,7 +504,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
         for res in cause {
             match res.op() {
                 None => strcause = " i ".to_string(),
-                Some(_Resume) => {
+                Some(_resume) => {
                     strcause = format!(
                         "{} etape {}",
                         symbol
@@ -534,7 +536,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
     for res in fin {
         match res.op() {
             None => strcause = " i ".to_string(),
-            Some(_Resume) => {
+            Some(_resume) => {
                 strcause = format!(
                     "{} etape {}",
                     symbol
@@ -910,13 +912,13 @@ pub fn dijkstra2(support: &DMatrix<i32>, plan: Vec<Op>, ground: &GroundProblem) 
     let length = plan.len();
     let l2 = length as u32;
     let plan3 = plan.clone();
-    let mut cause = causalitegoals(plan3, init, ops, goals);
-    let plan3 = plan.clone();
+    let /*mut*/ cause = causalitegoals(plan3, init, ops, goals);
+    //let plan3 = plan.clone();
     let matrice = support.clone();
     let mut atraite = Vec::new();
     let mut traite = Vec::new();
 
-    cause = causalitegoals(plan3, init, ops, goals);
+    //cause = causalitegoals(plan3, init, ops, goals);
     let mut count = 0;
     let plan2 = plan.clone();
     for i in plan2 {

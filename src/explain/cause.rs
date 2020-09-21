@@ -1,3 +1,5 @@
+#[allow(dead_code)]
+#[allow(unused)]
 //use crate::classical::heuristics::*;
 use crate::explain::explain::*;
 use crate::explain::state2::*;
@@ -103,7 +105,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
     //initialisation
     //let plan2 =plan.clone();
     //let plan3 =plan.clone();
-    let mut strcause = String::new();
+    let mut strcause;// = String::new();
 
     //boucle faire lien causaux de chaque opé plan
     let mut count = 0; //pour suivre etape
@@ -129,7 +131,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
         for res in cause {
             match res.op() {
                 None => strcause = " i ".to_string(),
-                Some(_Resume) => {
+                Some(_resume) => {
                     strcause = format!(
                         "{}:{}",
                         res.numero(),
@@ -160,7 +162,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
     for res in fin {
         match res.op() {
             None => strcause = " i ".to_string(),
-            Some(_Resume) => {
+            Some(_resume) => {
                 strcause = format!(
                     "{}:{}",
                     res.numero(),
@@ -192,7 +194,7 @@ pub fn fichierdotmat<T, I: Display>(
     //initialisation
     //let plan2 =plan.clone();
     //let plan3 =plan.clone();
-    let mut strcause = String::new();
+    let mut strcause ;//= String::new();
 
     //boucle faire lien causaux de chaque opé plan
     //let mut count = 0;//pour suivre etape
@@ -445,7 +447,7 @@ pub fn fichierdottempmat<T, I: Display>(
 
     //initialisation
     let plan3 = plan.clone();
-    let mut strcause = String::new();
+    let mut strcause ;//= String::new();
 
     //boucle faire lien causaux de chaque opé plan
     let t = plan.len();
@@ -646,7 +648,7 @@ pub fn fichierdottempmat2<T, I: Display>(
 
     //initialisation
     //let plan3 =plan.clone();
-    let mut strcause = String::new();
+    let mut strcause ;//= String::new();
 
     //boucle faire lien causaux de chaque opé plan
     let t = plan.len();
