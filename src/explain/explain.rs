@@ -1475,13 +1475,14 @@ pub fn explicationsupport(
             let ind = somme.opnec().numero() as usize;
             if support[(i, ind)] != 0 {
                 //println!("essai entrée dijk 0");
+                let p = support[(i, ind)] as u32;
                 let mut newatraite = Vec::new();
                 for res in atraite {
                     //println!("essai entrée dijk {}, {}",res.opnec().numero(),b);
                     if res.opnec().numero() == b {
                         //ici pb
                         //println!("essai entrée dijk 1");
-                        if res.long() > somme.long() + 1 {
+                        if res.long() > somme.long() + p {
                             //attention unwrap
                             let mut newchemin;
                             if somme.chemin().is_none() {
@@ -1490,7 +1491,7 @@ pub fn explicationsupport(
                                 newchemin = somme.chemin().unwrap();
                             }
                             newchemin.push(somme.opnec());
-                            let nec = newnec(res.opnec(), somme.nec(), newchemin, somme.long() + 1);
+                            let nec = newnec(res.opnec(), somme.nec(), newchemin, somme.long() + p);
                             newatraite.push(nec);
                         } else {
                             newatraite.push(res);

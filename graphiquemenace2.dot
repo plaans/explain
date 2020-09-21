@@ -1,0 +1,32 @@
+digraph D { 
+edge [color=red];
+"0:(pick ballebleu rooma left)" -> "2:(drop ballebleu roomb left)";
+edge [color=yellow];
+"0:(pick ballebleu rooma left)" -> "4:(pick ballerouge rooma left)";
+edge [color=blue];
+"1:(move rooma roomb)" -> "0:(pick ballebleu rooma left)";
+edge [color=red];
+"1:(move rooma roomb)" -> "3:(move roomb rooma)";
+edge [color=yellow];
+"1:(move rooma roomb)" -> "4:(pick ballerouge rooma left)";
+edge [color=yellow];
+"1:(move rooma roomb)" -> "5:(move rooma roomb)";
+edge [color=blue];
+"3:(move roomb rooma)" -> "0:(pick ballebleu rooma left)";
+edge [color=blue];
+"3:(move roomb rooma)" -> "2:(drop ballebleu roomb left)";
+edge [color=red];
+"3:(move roomb rooma)" -> "5:(move rooma roomb)";
+edge [color=yellow];
+"3:(move roomb rooma)" -> "6:(drop ballerouge roomb left)";
+edge [color=blue];
+"4:(pick ballerouge rooma left)" -> "0:(pick ballebleu rooma left)";
+edge [color=blue];
+"5:(move rooma roomb)" -> "0:(pick ballebleu rooma left)";
+edge [color=blue];
+"5:(move rooma roomb)" -> "1:(move rooma roomb)";
+edge [color=blue];
+"5:(move rooma roomb)" -> "4:(pick ballerouge rooma left)";
+edge [color=blue];
+"6:(drop ballerouge roomb left)" -> "0:(pick ballebleu rooma left)";
+} 

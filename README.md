@@ -65,6 +65,8 @@ Questions available:
 
     -parallelizable <step> <step>               #Display a boolean to know if the two steps are parallelizable, parallelizable-d to have more detail
 
+    -weight <weight> <step> <step> <parameters> #Display a path between two steps with the least possible parameters of the list (weight is a number)
+
 
 Example of question : "support 4"
 

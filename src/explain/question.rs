@@ -823,6 +823,26 @@ pub fn affichageq9d(
     }
 }
 
+//Q9 paramètres
+pub fn q9param(
+    poids: i32,
+    step1: i32,
+    step2: i32,
+    parametre: &Vec<String>,
+    plan: &Vec<Op>,
+    ground: &GroundProblem,
+    symbol: &SymbolTable<String, String>,
+    support: &DMatrix<i32>
+)->Option<Vec<Resume>>{
+    let hash=coordination(parametre,plan,ground,symbol);
+    let newsupport=poidsparametredesavantage(poids,support,&hash,plan,ground);
+    affichagematrice(&newsupport);
+    let nec=explicationsupport(plan,&newsupport,step1,step2);
+    nec.chemin()
+}
+
+
+//
 pub fn choixquestions(
     decompoquestion: &Vec<&str>,
     support: &DMatrix<i32>,
@@ -1081,7 +1101,31 @@ pub fn choixquestionsmultiple(
                 affichageq8b(v, ground, lifted);
             }
         }
-        Question::Weigthway => unimplemented!(),
+        Question::Weigthway => if decompoquestion.len()<=3{
+            println!("Missing parameters, verify your question");
+        }
+        else{
+            let t = decompoquestion.len();
+            let mut listparam = Vec::new();
+            let mystring1 = decompoquestion[1].to_string();
+            let poids = mystring1.parse::<i32>().unwrap();
+            let mystring2 = decompoquestion[2].to_string();
+            let num2 = mystring2.parse::<i32>().unwrap();
+            let mystring1 = decompoquestion[3].to_string();
+            let num1 = mystring1.parse::<i32>().unwrap();
+            let chemin;
+            for i in 4..t {
+                listparam.push(decompoquestion[i].to_string());
+            }
+            if num1>num2{
+                 chemin = q9param(poids,num1,num2,&listparam,plan,ground,symbol,support);
+            }
+            else{
+                 chemin = q9param(poids,num2,num1,&listparam,plan,ground,symbol,support);
+            }
+            affichageq9d(&chemin, ground, symbol);
+        }
+        ,
         Question::Qundefined => println!("Not a question available"),
         //_ => println!("Reach Unreachable"),
     }
