@@ -76,7 +76,7 @@ pub fn affichageq2(
     //let i = num as i32;
     //let n=newresume(*plan.get(num).unwrap(),i);
     println!(
-        "{}:{} support ",
+        "{}:{} supports ",
         num,
         symbol
             .table
@@ -1075,7 +1075,17 @@ pub fn choixquestionsmultiple(
                 affichageqd6(v);
             }
         }
-        Question::AchieveGoal => unimplemented!(),
+        Question::AchieveGoal => {
+            if decompoquestion.len()<=1{
+                println!("Missing parameters, verify your question");
+            }
+            else{
+                let mystring = decompoquestion[1].to_string();
+                let num = mystring.parse::<usize>().unwrap();
+                let v = achievegoal(num, support);
+                affichageq7(num, v, plan, ground, lifted);
+            }   
+        },
         Question::Synchronisation => {
             if decompoquestion.len()<=1{
                 println!("Missing parameters, verify your question");
@@ -1129,4 +1139,46 @@ pub fn choixquestionsmultiple(
         Question::Qundefined => println!("Not a question available"),
         //_ => println!("Reach Unreachable"),
     }
+}
+
+pub fn help(){
+    println!("
+s or support-graph   Generate dot support and display matrixsupport
+m or threat-graph   Generate dot threat and display matrix menace
+question 
+gg  Make plan with aries planificator if you have suspicion about your plan
+p   Display plan
+h   Help
+e   exit
+
+Questions available:
+-support <step>
+#Display others steps support by step 
+
+-supported <step>
+#Display others steps support of step
+
+-goal <step>
+#Display true if step accomplish a goal
+
+-necessary <step>
+#Display if step participates to the accomplishment of a goal,
+#       necessary-d to have the shortest path
+
+-path <source-step> <target-step>
+#Display path between two steps, path-d to have the path.
+
+-threat <source-step> <target-step>
+#Display if source-step threats target-step if it put right before.
+
+-betweeness <n-score>
+#Display all step with a betweeness upper than the n-th score.
+
+-synchro <parameters>
+#Display step that make link between group based on parameters
+
+-parallelizable <step> <step>
+#Display a boolean to know if the two steps are parallelizable,
+#       parallelizable-d to have more detail
+");
 }

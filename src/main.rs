@@ -187,6 +187,7 @@ fn main() -> Result<()> {
     //Interactif
     if interact | rien {
         let mut bool = true;
+        help();
         while bool {
             println!("What do you want to do?");
             let mut guess = String::new();
@@ -214,8 +215,9 @@ fn main() -> Result<()> {
                     println!("file graphiquemenace2.dot rewrited for threat relations");
                     affichagematrice(&matm);
                 }
-                "q" | "question" => {
+                "question" => {
                     //let q=decompo[1];
+                    //if decompo.is_empty()
                     decompo.remove(0);
                     //choixquestions(&decompo, &mat, &matm, &plan, &grounded, &lifted.world, &symbols);
                     choixquestionsmultiple(
@@ -269,27 +271,9 @@ fn main() -> Result<()> {
                     println!("");
                 }
                 "h" | "help" => {
-                    println!("
-                    s or support-graph   Generate dot support and display matrixsupport
-                    m or threat-graph   Generate dot threat and display matrix menace
-                    q   Question 
-                    gg  Make plan with aries planificator if you have suspicion about your plan
-                    p   Display plan
-                    h   Help
-                    e   exit
-
-                    Questions available:
-                    -support <step>                             #Display others steps support by step 
-                    -supported <step>                           #Display others steps support of step
-                    -goal <step>                                #Display true if step accomplish a goal
-                    -necessary <step>                           #Display if step participates to the accomplishment of a goal, necessary-d to have the shortest path
-                    -path <source-step> <target-step>           #Display path between two steps, path-d to have the path.
-                    -threat <source-step> <target-step>         #Display if source step threat target-step if it put right before.
-                    -betweeness <n-score>                       #Display all step with a betweeness upper than the n-th score.
-                    -synchro <parameters>                       #Display step that make link between group based on parameters
-                    -parallelizable <step> <step>               #Display a boolean to know if the two steps are parallelizable, parallelizable-d to have more detail");
+                    help();
                 }
-                "e" | "exit" => bool = false,
+                "q" | "e" | "exit" => bool = false,
                 _ =>{
                     let sq=selectionquestion(cmd);
                     if sq == Question::Qundefined{
