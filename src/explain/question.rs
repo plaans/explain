@@ -494,7 +494,7 @@ pub fn affichageqd6(p: Parallelisabledetail) {
             vers: _,
             chemin: _,
         } => println!("aren't parallelizable because of an indirect support relation "),
-        Parallelisabledetail::MenaceApres { origine: _, vers: _ } => println!("aren't parallelizable  "),
+        Parallelisabledetail::MenaceApres { origine: _, vers: _ } => println!("aren't parallelizable  because the most recent step threathen the older step"),
         Parallelisabledetail::MenaceAvant {
             origine: _,
             vers: _,
