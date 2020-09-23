@@ -1118,11 +1118,11 @@ pub fn choixquestionsmultiple(
             let t = decompoquestion.len();
             let mut listparam = Vec::new();
             let mystring1 = decompoquestion[1].to_string();
-            let poids = mystring1.parse::<i32>().unwrap();
+            let num1 = mystring1.parse::<i32>().unwrap();
             let mystring2 = decompoquestion[2].to_string();
             let num2 = mystring2.parse::<i32>().unwrap();
             let mystring1 = decompoquestion[3].to_string();
-            let num1 = mystring1.parse::<i32>().unwrap();
+            let poids = mystring1.parse::<i32>().unwrap();
             let chemin;
             for i in 4..t {
                 listparam.push(decompoquestion[i].to_string());
@@ -1181,10 +1181,10 @@ Questions available:
 #Display a boolean to know if the two steps are parallelizable,
 #       parallelizable-d to have more detail
 
--weight <weight> <step> <step> <parameters>
+-weightedpath <step> <step> <weight> <parameters>
 #Display a path between two steps
 with the least possible parameters of the list
-(weight is a number below wich is not interesting to use operator
+(weight is a number wich penalize arch of operator
 with  excluded parameters)
 ");
 }

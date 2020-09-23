@@ -386,7 +386,7 @@ pub fn selectionquestion(s: &str) -> Question {
         "7" | "goal" | "but" => Question::AchieveGoal,
         "8s" | "Synchro" | "synchronisation" | "synchro" => Question::Synchronisation,
         "8b" | "intermédiarité" | "intermediarite" | "betweeness" => Question::Betweeness,
-        "9" | "poids" | "weight" => Question::Weigthway,
+        "9" | "poids" | "weight" | "weighted" | "weightedpath" => Question::Weigthway,
         _ => Question::Qundefined,
     }
 }
