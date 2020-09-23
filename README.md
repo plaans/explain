@@ -48,7 +48,7 @@ Questions available:
  - `necessary <step>`                            : Display if step participates to the accomplishment of a goal, necessary-d to have the shortest path
  - `path <source-step> <target-step>`           : Display path between two steps, path-d to have the path.
  - `threat <source-step> <target-step>`         : Display if source-step threats target-step if it put right before.
- - `betweeness <n-score>`                       #Display all step with a betweeness upper than the n-th score.
+ - `betweeness <n-score>`                       :Display all step with a betweeness upper than the n-th score.
  - `synchro <parameters>`                       : Display step that make link between group based on parameters
  - `parallelizable <step> <step>`               : Display a boolean to know if the two steps are parallelizable, parallelizable-d to have more detail
  - `weight <weight> <step> <step> <parameters>` : Display a path between two steps with the least possible parameters of the list (weight is a number)
