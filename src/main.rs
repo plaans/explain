@@ -138,6 +138,31 @@ fn main() -> Result<()> {
     //Traitement
     let mut mat = matricesupport3(&plan, &grounded);
     let mut matm = matricemenace2(&plan, &grounded);
+/*
+    println!("Essai groupe");
+    let groupe= abstractionop(&mat,&plan,&grounded);
+    if groupe.len()>=1{
+        for i in &groupe{
+            println!("groupe:");
+            for &op in i{
+                print!("{:?}, {} ",op, symbols.format(grounded.operators.name(op)))
+            }
+            println!("");
+        }
+        let g2 =abstractionregroupop(&groupe);
+        if g2.len()>=1{
+            for i in g2{
+                println!("regroupe:");
+                for op in i{
+                    print!("{:?}, {} ",op, symbols.format(grounded.operators.name(op)))
+                }
+                println!("");
+            }
+        }
+    }
+*/
+    
+
     //Non interactif
     if affiche {
         println!("Got plan: {} actions", plan.len());

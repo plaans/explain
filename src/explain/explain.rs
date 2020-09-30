@@ -2520,6 +2520,104 @@ pub fn abstractionaction(
     out
 }
 
+//Abstract regroup
+//Ne fonctionne pas pb de taille de slice différente
+/*
+pub fn abstractionregroupop(group:&Vec<Vec<Op>>)->Vec<Vec<Op>>{   
+    //let mut fusion= Vec::new();
+   /* for &i in group{
+        fusion.push(i);
+    }*/ 
+    let mut group2 =group.clone();
+    //let  fusion:&mut [Vec<Op>] = &mut group2[..];
+    let mut fusion2 = &mut group2;
+    let fusionchgmt=&group[..];
+    let mut change =true;
+    let taille = fusion2.len();
+    let mut newfusion : Vec<Vec<Op>>=Vec::new(); 
+    while change{
+        change= false;
+        //let mut newfusion : Vec<Vec<Op>>=Vec::new();
+        for i in 0..taille-1{
+            //let mut g = fusion[i].clone();
+            //let &mut g3= &g;
+            let ref g2 = fusion2[i].clone();
+            for &op in g2{
+                for j in i..taille{
+                    let ref fu2=fusion2[j].clone();
+                    if fu2.contains(&op){
+                        let mut g = fusionchgmt[i].clone();
+                        g.append(/*mut fu2*/&mut fusionchgmt[j].clone());
+                        g.sort();
+                        newfusion.push( g.to_vec());
+                        change = true;
+                        //taille = fusion.len();
+                    }
+                }
+            }
+            if change==false{
+                let g = fusionchgmt[i].clone();
+                newfusion.push(g.clone()); 
+            }
+        }
+        if change {
+            if fusion2.len()==newfusion.len(){
+               newfusion.dedup();
+                fusion2.clone_from_slice(&newfusion[..]);
+                //fusion2 =&mut newfusion.to_vec().clone();
+            }
+            else{
+                println!("{},{}",newfusion.len(),fusion2.len());
+            }
+            //fusion.slice_fill(&newfusion[..]);
+        }
+    }
+    //let out = fusion.to_vec();
+    //out
+    fusion2.to_vec()
+
+}
+
+pub fn abstractionregroupaction(group:&Vec<Vec<SymId>>)->Vec<Vec<SymId>>{   
+
+    let mut group2 =group.clone();
+    let  fusion:&mut [Vec<SymId>] = &mut group2[..];
+    let fusionchgmt=&group[..];
+    let mut change =true;
+    while change{
+        change= false;
+        let mut newfusion : Vec<Vec<SymId>>=Vec::new();
+        let taille = fusion.len();
+        for i in 0..taille-1{
+            println!("{},{}",newfusion.len(),fusion.len());
+            let ref g2 = fusion[i].clone();
+            for &op in g2{
+                for j in i..taille{
+                    let ref fu2=fusion[j].clone();
+                    if fu2.contains(&op){
+                        let mut g = fusionchgmt[i].clone();
+                        g.append(&mut fusionchgmt[j].clone());
+                        g.sort();
+                        newfusion.push( g.to_vec());
+                        change = true;
+                    }
+                }
+            }
+            if change==false{
+                let g = fusionchgmt[i].clone();
+                newfusion.push(g.clone()); 
+            }
+        }
+        if change {
+            newfusion.dedup();
+            fusion.clone_from_slice(&newfusion[..]);
+        }
+    }
+    let out = fusion.to_vec();
+    out
+}
+*/
+
 //Synchronisation
 
 pub fn coordination(
