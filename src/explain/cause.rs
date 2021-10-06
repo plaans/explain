@@ -3,7 +3,6 @@ use crate::explain::explain::*;
 use crate::explain::state2::*;
 use aries_planning::classical::state::*;
 use aries_planning::classical::GroundProblem;
-use std::fmt::Display;
 
 //ajout pour gerer fichier
 use std::fs::File;

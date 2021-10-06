@@ -3,7 +3,6 @@ use crate::explain::state2::*;
 use aries_planning::classical::state::*;
 use aries_planning::classical::GroundProblem;
 use std::collections::HashMap;
-use std::fmt::Display;
 
 //ajout pour gerer fichier
 use std::fs::File;
@@ -464,7 +463,7 @@ pub fn uniexpli(neplan: Vec<Necessaire>) -> Vec<Necessaire> {
                 if i.opnec() == t.opnec() {
                     present = true;
                     if i.long() < t.long() {
-                        std::mem::replace(&mut newout[count], ic.clone());
+                        let _ = std::mem::replace(&mut newout[count], ic.clone());
                     }
                 }
                 count = count + 1;
