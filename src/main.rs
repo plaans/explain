@@ -118,9 +118,10 @@ fn main() -> Result<()> {
     let lines = plan_string.lines();
 
     for c in lines.clone() {
+        let c = c.to_ascii_lowercase();
         for op in grounded.operators.iter() {
             let a = symbols.format(grounded.operators.name(op));
-            if a == c {
+            if c.contains(&a) {
                 plan.push(op);
             }
         }
