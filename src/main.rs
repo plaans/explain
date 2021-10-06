@@ -13,6 +13,7 @@ use std::io; /*::{Write, BufReader, BufRead, Error,stdin};*/
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use structopt::StructOpt;
+use aries_utils::input::Input;
 
 /*fn main() {
     println!("Hello, world!");
@@ -82,17 +83,7 @@ fn main() -> Result<()> {
     let domain_file = match opt.domain {
         Some(name) => PathBuf::from(&name),
         None => {
-            let dir = problem_file.parent().unwrap();
-            let candidate1 = dir.join("domain.pddl");
-            let candidate2 = dir.parent().unwrap().join("domain.pddl");
-            if candidate1.exists() {
-                candidate1
-            } else if candidate2.exists() {
-                candidate2
-            } else {
-                bail!("Could not find find a corresponding 'domain.pddl' file in same or parent directory as the problem file.\
-                 Consider adding it explicitly with the -d/--domain option");
-            }
+            aries_planning::parsing::pddl::find_domain_of(&problem_file)?
         }
     };
 
@@ -105,12 +96,14 @@ fn main() -> Result<()> {
     let affiche = opt.affiche;
 
     //transformation de pddl
-    let dom = std::fs::read_to_string(domain_file)?;
+    let dom = Input::from_file(&domain_file)?;
 
-    let prob = std::fs::read_to_string(problem_file)?;
+    let prob = Input::from_file(&problem_file)?;
 
     let plan_string = std::fs::read_to_string(plan_file)?;
 
+    let dom = aries_planning::parsing::pddl::parse_pddl_domain(dom)?;
+    let prob = aries_planning::parsing::pddl::parse_pddl_problem(prob)?;
     let spec = pddl_to_chronicles(&dom, &prob)?;
 
     let lifted = from_chronicles(&spec)?;

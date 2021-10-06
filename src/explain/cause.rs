@@ -92,7 +92,7 @@ pub fn causalitegoals2(
 }
 
 //creer le fichier dot des liens causaux
-pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol: &World<T, I>) {
+pub fn fichierdot2(plan: &Vec<Op>, ground: &GroundProblem, symbol: &World) {
     //fichier de sortie
     let path = "graphique.dot";
 
@@ -122,7 +122,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
         h = h2;
         e = e1.clone();
         let op = plan.get(count as usize).unwrap();
-        let opname = &ground.operators.name(*op);
+        let opname = ground.operators.name(*op);
 
         //inscription dans fichier
 
@@ -135,7 +135,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
                         res.numero(),
                         symbol
                             .table
-                            .format(&ground.operators.name(res.op().unwrap()))
+                            .format(ground.operators.name(res.op().unwrap()))
                     )
                 }
                 //_ => (),
@@ -166,7 +166,7 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
                     res.numero(),
                     symbol
                         .table
-                        .format(&ground.operators.name(res.op().unwrap()))
+                        .format(ground.operators.name(res.op().unwrap()))
                 )
             }
         }
@@ -176,11 +176,11 @@ pub fn fichierdot2<T, I: Display>(plan: &Vec<Op>, ground: &GroundProblem, symbol
     write!(output, "}} ").expect("Something went wrong writing the file");
 }
 
-pub fn fichierdotmat<T, I: Display>(
+pub fn fichierdotmat(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<T, I>,
+    symbol: &World,
 ) {
     //fichier de sortie
     let path = "graphique.dot";
@@ -217,7 +217,7 @@ pub fn fichierdotmat<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -236,7 +236,7 @@ pub fn fichierdotmat<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -246,7 +246,7 @@ pub fn fichierdotmat<T, I: Display>(
                         r,
                         symbol
                             .table
-                            .format(&ground.operators.name(*plan.get(r).unwrap()))
+                            .format(ground.operators.name(*plan.get(r).unwrap()))
                     );
                     if c == t {
                         let stri = format!("\"{}\" -> \" Goal \";\n", strcause);
@@ -261,7 +261,7 @@ pub fn fichierdotmat<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -431,11 +431,11 @@ pub fn matricemenace2(plan: &Vec<Op>, ground: &GroundProblem) -> DMatrix<i32> {
     matrice
 }
 
-pub fn fichierdottempmat<T, I: Display>(
+pub fn fichierdottempmat(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<T, I>,
+    symbol: &World,
 ) {
     //fichier de sortie
     let path = "graphiquetemp.dot";
@@ -468,7 +468,7 @@ pub fn fichierdottempmat<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -487,7 +487,7 @@ pub fn fichierdottempmat<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -497,7 +497,7 @@ pub fn fichierdottempmat<T, I: Display>(
                         r,
                         symbol
                             .table
-                            .format(&ground.operators.name(*plan.get(r).unwrap()))
+                            .format(ground.operators.name(*plan.get(r).unwrap()))
                     );
                     if c == t {
                         let stri = format!("\"{}\" -> \" Goal \";\n", strcause);
@@ -512,7 +512,7 @@ pub fn fichierdottempmat<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -529,8 +529,8 @@ pub fn fichierdottempmat<T, I: Display>(
     for t in temp {
         let (op1, op2) = t.operateur();
         let (num1, num2) = t.etape();
-        let opname1 = &ground.operators.name(op1);
-        let opname = &ground.operators.name(op2);
+        let opname1 = ground.operators.name(op1);
+        let opname = ground.operators.name(op2);
         let stri = format!(
             "\"{}:{}\" -> \"{}:{}\";\n",
             num1,
@@ -544,11 +544,11 @@ pub fn fichierdottempmat<T, I: Display>(
     write!(output, "}} ").expect("Something went wrong writing the file");
 }
 
-pub fn fichierdotmenacemat<T, I: Display>(
+pub fn fichierdotmenacemat(
     mat: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<T, I>,
+    symbol: &World,
 ) {
     //fichier de sortie
     let path = "graphiquemenace2.dot";
@@ -571,8 +571,8 @@ pub fn fichierdotmenacemat<T, I: Display>(
                 } else if c == t + 1 {
                     println!("erreur taille de la matrice en {}{}", r, c);
                 } else {
-                    let namer = &ground.operators.name(*plan.get(r).unwrap());
-                    let namec = &ground.operators.name(*plan.get(c).unwrap());
+                    let namer = ground.operators.name(*plan.get(r).unwrap());
+                    let namec = ground.operators.name(*plan.get(c).unwrap());
                     write!(output, "edge [color=blue];\n")
                         .expect("Something went wrong writing the file");
                     let stri = format!(
@@ -590,8 +590,8 @@ pub fn fichierdotmenacemat<T, I: Display>(
                 } else if c == t + 1 {
                     println!("erreur taille de la matrice en {}{}", r, c);
                 } else {
-                    let namer = &ground.operators.name(*plan.get(r).unwrap());
-                    let namec = &ground.operators.name(*plan.get(c).unwrap());
+                    let namer = ground.operators.name(*plan.get(r).unwrap());
+                    let namec = ground.operators.name(*plan.get(c).unwrap());
                     write!(output, "edge [color=red];\n")
                         .expect("Something went wrong writing the file");
                     let stri = format!(
@@ -609,8 +609,8 @@ pub fn fichierdotmenacemat<T, I: Display>(
                 } else if c == t + 1 {
                     println!("erreur taille de la matrice en {}{}", r, c);
                 } else {
-                    let namer = &ground.operators.name(*plan.get(r).unwrap());
-                    let namec = &ground.operators.name(*plan.get(c).unwrap());
+                    let namer = ground.operators.name(*plan.get(r).unwrap());
+                    let namec = ground.operators.name(*plan.get(c).unwrap());
                     write!(output, "edge [color=yellow];\n")
                         .expect("Something went wrong writing the file");
                     let stri = format!(
@@ -631,12 +631,12 @@ pub fn fichierdotmenacemat<T, I: Display>(
     write!(output, "}} ").expect("Something went wrong writing the file");
 }
 
-pub fn fichierdottempmat2<T, I: Display>(
+pub fn fichierdottempmat2(
     support: &DMatrix<i32>,
     menace: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<T, I>,
+    symbol: &World,
 ) {
     //fichier de sortie
     let path = "graphiquetemp.dot";
@@ -669,7 +669,7 @@ pub fn fichierdottempmat2<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -688,7 +688,7 @@ pub fn fichierdottempmat2<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -698,7 +698,7 @@ pub fn fichierdottempmat2<T, I: Display>(
                         r,
                         symbol
                             .table
-                            .format(&ground.operators.name(*plan.get(r).unwrap()))
+                            .format(ground.operators.name(*plan.get(r).unwrap()))
                     );
                     if c == t {
                         let stri = format!("\"{}\" -> \" Goal \";\n", strcause);
@@ -713,7 +713,7 @@ pub fn fichierdottempmat2<T, I: Display>(
                             c,
                             symbol
                                 .table
-                                .format(&ground.operators.name(*plan.get(c).unwrap()))
+                                .format(ground.operators.name(*plan.get(c).unwrap()))
                         );
                         write!(output, "{}", stri).expect("Something went wrong writing the file");
                     }
@@ -727,8 +727,8 @@ pub fn fichierdottempmat2<T, I: Display>(
     for inv in 0..t - 1 {
         if menace[(inv + 1, inv)] != 0 {
             //print!("{}, ",inv);
-            let opname1 = &ground.operators.name(*plan.get(inv).unwrap());
-            let opname = &ground.operators.name(*plan.get(inv + 1).unwrap());
+            let opname1 = ground.operators.name(*plan.get(inv).unwrap());
+            let opname = ground.operators.name(*plan.get(inv + 1).unwrap());
             let stri = format!(
                 "\"{}:{}\" -> \"{}:{}\";\n",
                 inv,

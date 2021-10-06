@@ -2,7 +2,6 @@
 use crate::explain::state2::*;
 use aries_planning::classical::state::*;
 use aries_planning::classical::GroundProblem;
-use aries_planning::symbols::{SymId, SymbolTable};
 use std::collections::HashMap;
 use std::fmt::Display;
 
@@ -12,6 +11,7 @@ use std::io::{Write};
 
 //matrice facilite Dijktstra
 use nalgebra::base::*;
+use aries_model::symbols::{SymbolTable, SymId};
 
 //ancien search
 //------------------------------------------------------------
@@ -202,7 +202,7 @@ pub fn causalitegoals(
 }
 
 //creer le fichier dot des liens causaux
-pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: &World<T, I>) {
+pub fn fichierdot(plan: Vec<Op>, ground: &GroundProblem, symbol: &World) {
     //fichier de sortie
     let path = "graphique.dot";
 
@@ -222,7 +222,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
         //faire cause
         let cause = causalite(count, plan2, &ground.initial_state, &ground.operators);
         let op = plan3.get(count as usize).unwrap();
-        let opname = &ground.operators.name(*op);
+        let opname = ground.operators.name(*op);
         //faire string pour
 
         //inscription dans fichier
@@ -235,7 +235,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
                         "{} etape {}",
                         symbol
                             .table
-                            .format(&ground.operators.name(res.op().unwrap())),
+                            .format(ground.operators.name(res.op().unwrap())),
                         res.numero()
                     )
                 }
@@ -266,7 +266,7 @@ pub fn fichierdot<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: 
                     "{} etape {}",
                     symbol
                         .table
-                        .format(&ground.operators.name(res.op().unwrap())),
+                        .format(ground.operators.name(res.op().unwrap())),
                     res.numero()
                 )
             }
@@ -479,7 +479,7 @@ pub fn uniexpli(neplan: Vec<Necessaire>) -> Vec<Necessaire> {
     out
 }
 
-pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symbol: &World<T, I>) {
+pub fn fichierdottemp(plan: Vec<Op>, ground: &GroundProblem, symbol: &World) {
     //fichier de sortie
     let path = "graphiquetemp.dot";
     let mut output = File::create(path).expect("Something went wrong reading the file");
@@ -497,7 +497,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
         //faire cause
         let cause = causalite(count, plan2, &ground.initial_state, &ground.operators);
         let op = plan3.get(count as usize).unwrap();
-        let opname = &ground.operators.name(*op);
+        let opname = ground.operators.name(*op);
         //inscription dans fichier
         for res in cause {
             match res.op() {
@@ -507,7 +507,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
                         "{} etape {}",
                         symbol
                             .table
-                            .format(&ground.operators.name(res.op().unwrap())),
+                            .format(ground.operators.name(res.op().unwrap())),
                         res.numero()
                     )
                 }
@@ -539,7 +539,7 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
                     "{} etape {}",
                     symbol
                         .table
-                        .format(&ground.operators.name(res.op().unwrap())),
+                        .format(ground.operators.name(res.op().unwrap())),
                     res.numero()
                 )
             }
@@ -554,8 +554,8 @@ pub fn fichierdottemp<T, I: Display>(plan: Vec<Op>, ground: &GroundProblem, symb
     for t in temp {
         let (op1, op2) = t.operateur();
         let (num1, num2) = t.etape();
-        let opname1 = &ground.operators.name(op1);
-        let opname = &ground.operators.name(op2);
+        let opname1 = ground.operators.name(op1);
+        let opname = ground.operators.name(op2);
         let stri = format!(
             "\"{} etape {}\" -> \"{} etape {}\";\n",
             symbol.table.format(opname1),
@@ -701,10 +701,10 @@ pub fn menace2(plan: Vec<Op>, ground: &GroundProblem) -> Vec<Obligationtemp> {
     out
 }
 
-pub fn fichierdotmenace2<T, I: Display>(
+pub fn fichierdotmenace2(
     plan: Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<T, I>,
+    symbol: &World,
 ) {
     //fichier de sortie
     let path = "graphiquemenace2.dot";
@@ -721,8 +721,8 @@ pub fn fichierdotmenace2<T, I: Display>(
     for t in temp {
         let (op1, op2) = t.operateur();
         let (num1, num2) = t.etape();
-        let opname1 = &ground.operators.name(op1);
-        let opname = &ground.operators.name(op2);
+        let opname1 = ground.operators.name(op1);
+        let opname = ground.operators.name(op2);
         let stri = format!(
             "\"{} etape {}\" -> \"{} etape {}\";\n",
             symbol.table.format(opname1),
@@ -737,8 +737,8 @@ pub fn fichierdotmenace2<T, I: Display>(
     for m in menace {
         let (op1, op2) = m.operateur();
         let (num1, num2) = m.etape();
-        let opname1 = &ground.operators.name(op1);
-        let opname = &ground.operators.name(op2);
+        let opname1 = ground.operators.name(op1);
+        let opname = ground.operators.name(op2);
         if num1 > num2 {
             write!(output, "edge [color=red];\n").expect("Something went wrong writing the file");
             let stri = format!(
@@ -1673,7 +1673,7 @@ pub fn explication2etape(
     explicationmenace(plan, menace, support, /*ground,*/ step2, step1);
 }
 
-pub fn choixpredicat(i: usize, initial_state: &State) -> SVId {
+pub fn choixpredicat(i: usize, initial_state: &State) -> SvId {
     let mut l = initial_state.literals();
     let n = l.nth(i);
     match n {
@@ -1682,7 +1682,7 @@ pub fn choixpredicat(i: usize, initial_state: &State) -> SVId {
     }
 }
 
-pub fn choixpredaction(i: usize, plan: &Vec<Op>, ground: &GroundProblem) -> Vec<SVId> {
+pub fn choixpredaction(i: usize, plan: &Vec<Op>, ground: &GroundProblem) -> Vec<SvId> {
     //pas bon il faut rechercher l'id d'un symbol par ex: move  car operztor = 1 move instancié genre move rooma roomb
     //let init=&ground.initial_state;
     let ops = &ground.operators;
@@ -1704,7 +1704,7 @@ pub fn choixpredaction(i: usize, plan: &Vec<Op>, ground: &GroundProblem) -> Vec<
     out
 }
 
-pub fn choixpredaction2(i: usize, plan: &Vec<Op>, ground: &GroundProblem) -> Vec<SVId> {
+pub fn choixpredaction2(i: usize, plan: &Vec<Op>, ground: &GroundProblem) -> Vec<SvId> {
     //pas bon il faut rechercher l'id d'un symbol par ex: move  car operztor = 1 move instancié genre move rooma roomb
     //let init=&ground.initial_state;
     let ops = &ground.operators;
@@ -1753,8 +1753,8 @@ pub fn choixpredaction3(
     action: String,
     _plan: &Vec<Op>,
     ground: &GroundProblem,
-    wo: &SymbolTable<String, String>,
-) -> Vec<SVId>
+    wo: &SymbolTable,
+) -> Vec<SvId>
 /*where
     T: Clone + Eq + Hash + Display,
     I: Clone + Eq + Hash + Display,*/
@@ -1784,7 +1784,7 @@ pub fn choixpredaction3(
             }
         }
     }
-    println!("nb de SVId sélectionné predaction3 {}", out.len());
+    println!("nb de SvId sélectionné predaction3 {}", out.len());
     out
 }
 
@@ -1792,7 +1792,7 @@ pub fn dijkstrapoids(
     plan: &Vec<Op>,
     ground: &GroundProblem,
     mat: &DMatrix<i32>,
-    predicat: &Vec<SVId>,
+    predicat: &Vec<SvId>,
     infini: i32,
 ) -> Vec<Necessaire> {
     let init = &ground.initial_state;
@@ -1940,7 +1940,7 @@ pub fn dijkstrapoidsavantage(
     plan: &Vec<Op>,
     ground: &GroundProblem,
     mat: &DMatrix<i32>,
-    predicat: &Vec<SVId>,
+    predicat: &Vec<SvId>,
     infini: i32,
 ) -> Vec<Necessaire> {
     let init = &ground.initial_state;
@@ -2093,7 +2093,7 @@ pub fn supportindirectavantagepoid(
     plan: &Vec<Op>,
     ground: &GroundProblem,
     support: &DMatrix<i32>,
-    predicat: &Vec<SVId>,
+    predicat: &Vec<SvId>,
     infini: i32,
 ) -> Necessaire {
     //dijkstra( plan, ground);
@@ -2230,7 +2230,7 @@ pub fn supportindirectpoid(
     plan: &Vec<Op>,
     ground: &GroundProblem,
     support: &DMatrix<i32>,
-    predicat: &Vec<SVId>,
+    predicat: &Vec<SvId>,
     infini: i32,
 ) -> Necessaire {
     //dijkstra( plan, ground);
@@ -2439,7 +2439,7 @@ pub fn abstractionaction(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    _symbol: &SymbolTable<String, String>,
+    _symbol: &SymbolTable,
 ) -> Vec<Vec<SymId>> {
     /*let var = symbol.id(&action);
     if var.is_none() {
@@ -2458,19 +2458,19 @@ pub fn abstractionaction(
     let mut out = Vec::new();
     for i in plan {
         if v.is_empty() {
-            let action = &ground.operators.name(*i);
+            let action = ground.operators.name(*i);
             v.push(action[0]);
             nbop = nbop + 1;
         } else {
             let mut notin = true;
             for ope in &v {
-                let action = &ground.operators.name(*i);
+                let action = ground.operators.name(*i);
                 if *ope == action[0] {
                     notin = false;
                 }
             }
             if notin {
-                let action = &ground.operators.name(*i);
+                let action = ground.operators.name(*i);
                 v.push(action[0]);
                 nbop = nbop + 1;
             }
@@ -2482,9 +2482,9 @@ pub fn abstractionaction(
         for colonnes in 0..col - 2 {
             if support[(ligne, colonnes)] == 1 {
                 let op1 = *plan.get(ligne).unwrap();
-                let action1 = &ground.operators.name(op1);
+                let action1 = ground.operators.name(op1);
                 let op2 = *plan.get(colonnes).unwrap();
-                let action2 = &ground.operators.name(op2);
+                let action2 = ground.operators.name(op2);
                 let mut placeop1 = 0;
                 let mut placeop2 = 0;
                 let mut count = 0;
@@ -2624,7 +2624,7 @@ pub fn coordination(
     parametre: &Vec<String>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &SymbolTable<String, String>,
+    symbol: &SymbolTable,
 ) -> HashMap<SymId, Vec<Op>> {
     let mut h = HashMap::new();
     for param in parametre {
@@ -2650,10 +2650,10 @@ pub fn coordination(
     h
 }
 
-pub fn affichagecoordination<T, I: Display>(
+pub fn affichagecoordination(
     h: &HashMap<SymId, Vec<Op>>,
     ground: &GroundProblem,
-    wo: &World<T, I>,
+    wo: &World,
 ) {
     for (i, vec) in h.iter() {
         let vecinter = vec![*i];
@@ -2662,7 +2662,7 @@ pub fn affichagecoordination<T, I: Display>(
         for op in vec {
             println!(
                 "  l'opérateur {}",
-                wo.table.format(&ground.operators.name(*op))
+                wo.table.format(ground.operators.name(*op))
             );
         }
     }
@@ -2776,7 +2776,7 @@ pub fn coordinationmultiple(
     parametre: &Vec<String>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &SymbolTable<String, String>,
+    symbol: &SymbolTable,
 ) -> Vec<Op> {
     let t = parametre.len();
     let mut paramid = Vec::new();
@@ -2809,7 +2809,7 @@ pub fn coordinationmultiple(
 pub fn liencoormultisynchro(
     liste: &Vec<Op>,
     parametre: &Vec<String>,
-    symbol: &SymbolTable<String, String>,
+    symbol: &SymbolTable,
 ) -> HashMap<SymId, Vec<Op>> {
     let mut h = HashMap::new();
     let p = parametre.get(0).unwrap();

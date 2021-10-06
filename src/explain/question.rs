@@ -1,10 +1,9 @@
-use crate::explain::centralite::*;
 use crate::explain::explain::*;
 use crate::explain::state2::*;
 use aries_planning::classical::state::*;
 use aries_planning::classical::GroundProblem;
-use aries_planning::symbols::SymbolTable;
 use nalgebra::base::*;
+use aries_model::symbols::SymbolTable;
 
 
 //Quelles sont les supports de l’étape a?
@@ -28,7 +27,7 @@ pub fn affichageq1(
     plan: &Vec<Op>,
     sup: Vec<Resume>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     //let i=num as i32;
     //let n=newresume(*plan.get(num).unwrap(),i);
@@ -38,13 +37,13 @@ pub fn affichageq1(
         num,
         symbol
             .table
-            .format(&ground.operators.name(*plan.get(num).unwrap()))
+            .format(ground.operators.name(*plan.get(num).unwrap()))
     );
     for i in sup {
         print!(
             "    {}:{}, ",
             i.numero(),
-            symbol.table.format(&ground.operators.name(i.op().unwrap()))
+            symbol.table.format(ground.operators.name(i.op().unwrap()))
         );
     }
     println!("");
@@ -71,7 +70,7 @@ pub fn affichageq2(
     plan: &Vec<Op>,
     sup: Vec<Resume>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     //let i = num as i32;
     //let n=newresume(*plan.get(num).unwrap(),i);
@@ -80,13 +79,13 @@ pub fn affichageq2(
         num,
         symbol
             .table
-            .format(&ground.operators.name(*plan.get(num).unwrap()))
+            .format(ground.operators.name(*plan.get(num).unwrap()))
     );
     for i in sup {
         println!(
             "  {}:{}, ",
             i.numero(),
-            symbol.table.format(&ground.operators.name(i.op().unwrap()))
+            symbol.table.format(ground.operators.name(i.op().unwrap()))
         );
     }
     println!("");
@@ -107,7 +106,7 @@ pub fn affichageq3(
     m: bool,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     if m {
         println!(
@@ -115,11 +114,11 @@ pub fn affichageq3(
             a,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(a).unwrap())),
+                .format(ground.operators.name(*plan.get(a).unwrap())),
             b,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(b).unwrap()))
+                .format(ground.operators.name(*plan.get(b).unwrap()))
         );
     } else {
         println!(
@@ -127,11 +126,11 @@ pub fn affichageq3(
             a,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(a).unwrap())),
+                .format(ground.operators.name(*plan.get(a).unwrap())),
             b,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(b).unwrap()))
+                .format(ground.operators.name(*plan.get(b).unwrap()))
         );
     }
 }
@@ -178,7 +177,7 @@ pub fn affichageq4(
     b: bool,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     if b {
         println!(
@@ -186,7 +185,7 @@ pub fn affichageq4(
             num,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(num).unwrap()))
+                .format(ground.operators.name(*plan.get(num).unwrap()))
         );
     } else {
         println!(
@@ -194,13 +193,12 @@ pub fn affichageq4(
             num,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(num).unwrap()))
+                .format(ground.operators.name(*plan.get(num).unwrap()))
         );
     }
 }
 //a refaire sans nec et avec option Vec
-/*pub fn affichageqd4 (n:Necessaire, ground: &GroundProblem ,symbol:&World<String,String>){
-    print!("L'operateur {} de ",symbol.table.format(&ground.operators.name(n.opnec().op().unwrap())));
+/*pub fn affichageqd4 (n:Necessaire, ground: &GroundProblem ,symbol:&World    print!("L'operateur {} de ",symbol.table.format(ground.operators.name(n.opnec().op().unwrap())));
     n.affiche();
     println!("");
 }*/
@@ -210,14 +208,14 @@ pub fn affichageqd4(
     chemin: Option<Vec<Resume>>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     print!(
         "{}:{} ",
         num,
         symbol
             .table
-            .format(&ground.operators.name(*plan.get(num).unwrap()))
+            .format(ground.operators.name(*plan.get(num).unwrap()))
     );
     if chemin.is_none() {
         println!("isn't necessary");
@@ -230,7 +228,7 @@ pub fn affichageqd4(
                 op.numero(),
                 symbol
                     .table
-                    .format(&ground.operators.name(op.op().unwrap()))
+                    .format(ground.operators.name(op.op().unwrap()))
             );
         }
     }
@@ -274,7 +272,7 @@ pub fn affichageq5(
     bo: bool,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     if bo {
         println!(
@@ -282,11 +280,11 @@ pub fn affichageq5(
             a,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(a).unwrap())),
+                .format(ground.operators.name(*plan.get(a).unwrap())),
             b,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(b).unwrap()))
+                .format(ground.operators.name(*plan.get(b).unwrap()))
         );
     } else {
         println!(
@@ -294,25 +292,24 @@ pub fn affichageq5(
             a,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(a).unwrap())),
+                .format(ground.operators.name(*plan.get(a).unwrap())),
             b,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(b).unwrap()))
+                .format(ground.operators.name(*plan.get(b).unwrap()))
         );
     }
 }
 
 //a refaire sans nec et avec option Vec
-/*pub fn affichageqd5  (n:Necessaire, ground:&GroundProblem,symbol:&World<String,String>){
-    print!("L'operateur {} de ",symbol.table.format(ground.operators.name(n.opnec().op().unwrap())));
+/*pub fn affichageqd5  (n:Necessaire, ground:&GroundProblem,symbol:&World    print!("L'operateur {} de ",symbol.table.format(ground.operators.name(n.opnec().op().unwrap())));
     n.affiche();
     println!("");
 }*/
 pub fn affichageqd5(
     n: &Option<Vec<Resume>>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     let a = n.clone();
     println!("The path contains :");
@@ -520,7 +517,7 @@ pub fn affichageq7(
     b: bool,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     if b {
         println!(
@@ -528,7 +525,7 @@ pub fn affichageq7(
             num,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(num).unwrap()))
+                .format(ground.operators.name(*plan.get(num).unwrap()))
         );
     } else {
         println!(
@@ -536,7 +533,7 @@ pub fn affichageq7(
             num,
             symbol
                 .table
-                .format(&ground.operators.name(*plan.get(num).unwrap()))
+                .format(ground.operators.name(*plan.get(num).unwrap()))
         );
     }
 }
@@ -546,7 +543,7 @@ pub fn researchsynchro(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &SymbolTable<String, String>,
+    symbol: &SymbolTable,
 ) -> Vec<Resume> {
     let hash = coordination(parametre, plan, ground, symbol);
     let out = synchronisation(&hash, support, plan);
@@ -556,7 +553,7 @@ pub fn researchsynchro(
 pub fn affichageq8s(
     listesynchro: &Vec<Resume>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     for step in listesynchro {
         println!(
@@ -564,73 +561,24 @@ pub fn affichageq8s(
             step.numero(),
             symbol
                 .table
-                .format(&ground.operators.name(step.op().unwrap()))
+                .format(ground.operators.name(step.op().unwrap()))
         );
     }
-}
-
-//goulot
-
-pub fn nbetweeness(n: usize, support: &DMatrix<i32>, plan: &Vec<Op>) -> Vec<(Resume, f32)> {
-    let v = betweeness(support);
-    let mut nsup = Vec::new();
-    let mut out = Vec::new();
-    for i in 0..plan.len() {
-        if nsup.is_empty() {
-            nsup.push(v[i].round())
-        } else if nsup.len() < n {
-            let mut insertbool = false;
-            for u in 0..nsup.len() {
-                if v[i].round() >= nsup[u] && !insertbool {
-                    nsup.insert(u, v[i]);
-                    insertbool = true;
-                }
-            }
-            if !insertbool {
-                nsup.push(v[i].round());
-            }
-        } else {
-            let mut insertbool = false;
-            for u in 0..nsup.len() {
-                if v[i].round() >= nsup[u] && !insertbool {
-                    nsup.insert(u, v[i].round());
-                    insertbool = true
-                }
-            }
-            if insertbool {
-                //nsup.remove(0);
-                nsup.pop();
-            }
-        }
-    }
-    /*let mut count=0;
-        for i in &nsup{
-            println!(" {}-- score{}",count,*i);
-            count =count+1;
-        }
-    */
-    for i in 0..plan.len() {
-        if v[i].round() >= nsup[n - 1].round() {
-            let elem = (newresume(plan[i], i as i32), v[i]);
-            out.push(elem);
-        }
-    }
-    out
 }
 
 pub fn affichageq8b(
     listgoulot: Vec<(Resume, f32)>,
     ground: &GroundProblem,
-    symbol: &World<String, String>,
+    symbol: &World,
 ) {
     for step in listgoulot {
-        //println!("L'opérateur {} de l'étape {} est un point de passage important du plan de score {} ",symbol.table.format(&ground.operators.name(step.0.op().unwrap())),step.0.numero(),step.1);
+        //println!("L'opérateur {} de l'étape {} est un point de passage important du plan de score {} ",symbol.table.format(ground.operators.name(step.0.op().unwrap())),step.0.numero(),step.1);
         println!(
             "{}:{} is an important step in plan, his score is {} ",
             step.0.numero(),
             symbol
                 .table
-                .format(&ground.operators.name(step.0.op().unwrap())),
+                .format(ground.operators.name(step.0.op().unwrap())),
             step.1
         );
     }
@@ -662,7 +610,7 @@ pub fn weightwaygoal2(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    wo: &SymbolTable<String, String>,
+    wo: &SymbolTable,
     poids: i32,
 ) -> Option<Vec<Resume>> {
     let exclu = choixpredaction3(action, plan, ground, wo);
@@ -688,7 +636,7 @@ pub fn weightway(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    wo: &SymbolTable<String, String>,
+    wo: &SymbolTable,
     poids: i32,
 ) -> bool {
     let out = weightwaydetail(step1, step2, action, support, plan, ground, wo, poids);
@@ -702,7 +650,7 @@ pub fn weightwaydetail(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    wo: &SymbolTable<String, String>,
+    wo: &SymbolTable,
     poids: i32,
 ) -> Option<Vec<Resume>> {
     let s1 = step1 as i32;
@@ -719,7 +667,7 @@ pub fn inverseweightway(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    wo: &SymbolTable<String, String>,
+    wo: &SymbolTable,
     poids: i32,
 ) -> bool {
     let out = inverseweightwaydetail(step1, step2, action, support, plan, ground, wo, poids);
@@ -733,7 +681,7 @@ pub fn inverseweightwaydetail(
     support: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    wo: &SymbolTable<String, String>,
+    wo: &SymbolTable,
     poids: i32,
 ) -> Option<Vec<Resume>> {
     let s1 = step1 as i32;
@@ -804,7 +752,7 @@ pub fn inverseweightwaydetailetape(
 pub fn affichageq9d(
     chemin: &Option<Vec<Resume>>,
     ground: &GroundProblem,
-    wo: &SymbolTable<String, String>,
+    wo: &SymbolTable,
 ) {
     if chemin.is_some() {
         let n = chemin.clone();
@@ -813,7 +761,7 @@ pub fn affichageq9d(
             for step in i {
                 println!(
                     "l'opérateur {} de l'étapes {} ",
-                    wo.format(&ground.operators.name(step.op().unwrap())),
+                    wo.format(ground.operators.name(step.op().unwrap())),
                     step.numero()
                 );
             }
@@ -831,7 +779,7 @@ pub fn q9param(
     parametre: &Vec<String>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    symbol: &SymbolTable<String, String>,
+    symbol: &SymbolTable,
     support: &DMatrix<i32>
 )->Option<Vec<Resume>>{
     let hash=coordination(parametre,plan,ground,symbol);
@@ -849,8 +797,8 @@ pub fn choixquestions(
     menace: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    lifted: &World<String, String>,
-    symbol: &SymbolTable<String, String>,
+    lifted: &World,
+    symbol: &SymbolTable,
 ) {
     let q = decompoquestion[0];
 
@@ -940,13 +888,6 @@ pub fn choixquestions(
             affichageq8s(&listesynchro, ground, lifted);
             println!("");
         }
-        "8b" => {
-            let mystring = decompoquestion[1].to_string();
-            let num = mystring.parse::<usize>().unwrap();
-            let v = nbetweeness(num, support, plan);
-            affichageq8b(v, ground, lifted);
-            println!("");
-        }
         "9" => unimplemented!(),
         _ => println!("Not a question available"),
     }
@@ -958,8 +899,8 @@ pub fn choixquestionsmultiple(
     menace: &DMatrix<i32>,
     plan: &Vec<Op>,
     ground: &GroundProblem,
-    lifted: &World<String, String>,
-    symbol: &SymbolTable<String, String>,
+    lifted: &World,
+    symbol: &SymbolTable,
 ) {
     let q = decompoquestion[0];
     let sq = selectionquestion(q);
@@ -1098,17 +1039,6 @@ pub fn choixquestionsmultiple(
                 }
                 let listesynchro = researchsynchro(&listparam, support, plan, ground, symbol);
                 affichageq8s(&listesynchro, ground, lifted);
-            }
-        }
-        Question::Betweeness => {
-            if decompoquestion.len()<=1{
-                println!("Missing parameters, verify your question");
-            }
-            else{
-                let mystring = decompoquestion[1].to_string();
-                let num = mystring.parse::<usize>().unwrap();
-                let v = nbetweeness(num, support, plan);
-                affichageq8b(v, ground, lifted);
             }
         }
         Question::Weigthway => if decompoquestion.len()<=3{

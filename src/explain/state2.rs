@@ -327,7 +327,6 @@ pub enum Question {
     Parallelisablebool,
     Parallelisable,
     AchieveGoal,
-    Betweeness,
     Synchronisation,
     Weigthway,
     Qundefined,
@@ -385,7 +384,6 @@ pub fn selectionquestion(s: &str) -> Question {
         | "parallelizable-detail" => Question::Parallelisable,
         "7" | "goal" | "but" => Question::AchieveGoal,
         "8s" | "Synchro" | "synchronisation" | "synchro" => Question::Synchronisation,
-        "8b" | "intermédiarité" | "intermediarite" | "betweeness" => Question::Betweeness,
         "9" | "poids" | "weight" | "weighted" | "weightedpath" => Question::Weigthway,
         _ => Question::Qundefined,
     }
